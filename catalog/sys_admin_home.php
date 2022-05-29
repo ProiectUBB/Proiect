@@ -11,31 +11,52 @@
 
 <div class="sidenav">
   <a href="cont.php"><i class="fa fa-address-card"></i>  Cont</a>
+<<<<<<< HEAD
   <a href="users2.php"><i class="fa fa-users"></i>  Users</a>
   <a href="https://calendar.google.com/calendar/u/0/r"><i class="fa fa-calendar-minus-o"></i> Calendar</a>
 
 
+=======
+  <a href="users.php"><i class="fa fa-users"></i>  Users</a>
+  <a href="https://calendar.google.com/calendar/u/0/r"><i class="fa fa-calendar-minus-o"></i> Calendar</a>
+  
+  
+>>>>>>> b047e3e26f83d4276070922f024067fe006b2d17
 
   <button class="dropdown-btn"><i class="fa fa-sticky-note-o"></i> Log as
     <i class="fa fa-caret-down"></i>
   </button>
   <div class="dropdown-container">
+<<<<<<< HEAD
   <a href="sys_admin_home_CRUD.php">Sys Admin</a>
+=======
+>>>>>>> b047e3e26f83d4276070922f024067fe006b2d17
     <a href="admin_home.php">Admin</a>
     <a href="profesor_home.php">Teacher</a>
     <a href="student_home.php">Student</a>
   </div>
+<<<<<<< HEAD
 <!--
+=======
+
+>>>>>>> b047e3e26f83d4276070922f024067fe006b2d17
   <button class="dropdown-btn"><i class="fa fa-sticky-note-o"></i> C.R.U.D.
     <i class="fa fa-caret-down"></i>
   </button>
   <div class="dropdown-container">
+<<<<<<< HEAD
   <a href="sys_admin_home_sys_admin.php">Sys_Admin</a>
+=======
+>>>>>>> b047e3e26f83d4276070922f024067fe006b2d17
     <a href="sys_admin_home_admin.php">Admin</a>
     <a href="sys_admin_home_profesor.php">Teacher</a>
     <a href="sys_admin_home_student.php">Student</a>
   </div>
+<<<<<<< HEAD
 -->
+=======
+
+>>>>>>> b047e3e26f83d4276070922f024067fe006b2d17
   <a href="logout.php"><i class="fa fa-window-close"></i> Logout</a>
 </div>
 

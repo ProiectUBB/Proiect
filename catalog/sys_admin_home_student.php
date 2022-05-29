@@ -46,7 +46,11 @@
 
   </div>
 <div class="CrReUpDe">
+<<<<<<< HEAD
   <button class="CRUD"><a href="sys_admin_home_student_create.php">Create a student</a></button>
+=======
+  <button class="CRUD">Create a student</button>
+>>>>>>> b047e3e26f83d4276070922f024067fe006b2d17
 <button class="CRUD">Read info about a student</button>
 <button class="CRUD">Print all students</button>
 <button class="CRUD">Update a student</button>

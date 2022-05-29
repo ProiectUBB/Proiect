@@ -45,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
 	}
 
 	if ($eroare==0) {
-	  $sql = "SELECT idRol, username, parola FROM utilizatori WHERE username='$user' AND parola='$parola'";
+	  $sql = "SELECT id_role, username, password FROM users WHERE username='$user' AND password='$parola'";
 
 		$result = mysqli_query($conn, $sql);
 
@@ -60,13 +60,15 @@ if ($_SERVER["REQUEST_METHOD"]=="POST"){
 			$sql1 = "SELECT id FROM utilizatori WHERE username='$user' AND parola='$parola'";
 			$result1 = mysqli_query($conn, $sql);
 			while($row = $result->fetch_assoc()) {
-					$_SESSION['idRol'] = $row['idRol'];
-					if ($row['idRol']==1){
-							header("Location:student_home.php");
-					}elseif ($row['idRol']==2) {
-						header("Location:profesor_home.php");
-					}elseif ($row['idRol']==3) {
+					$_SESSION['idRol'] = $row['id_role'];
+					if ($row['id_role']==1){
+							header("Location:sys_admin_home.php");
+					}elseif ($row['id_role']==2) {
 						header("Location:admin_home.php");
+					}elseif ($row['id_role']==3) {
+						header("Location:student_home.php");
+					}elseif ($row['id_role']==4) {
+						header("Location:profesor_home.php");
 					}
 
 			 }

@@ -67,3 +67,16 @@ body {
   .sidenav {padding-top: 15px;}
   .sidenav a {font-size: 18px;}
 }
+
+
+.CRUD{
+  height: 100px;
+  width:60px;
+  background-color:white;
+  text-align: center;
+}
+
+.CrReUpDe{
+  height: 100px;
+  background-color:red;
+}

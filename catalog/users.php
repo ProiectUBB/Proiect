@@ -3,7 +3,7 @@ require_once 'header.php';
 
 echo "Useri<br><br>";
 
-$sql="SELECT * FROM utilizatori";
+$sql="SELECT * FROM users";
 $result = $conn->query($sql);
 
 	if ($result->num_rows > 0) {
@@ -24,7 +24,7 @@ $result = $conn->query($sql);
 			echo '<tr>
 
           <td class="text-center">'.$row["username"].'</td>
-          <td class="text-center">'.$row["parola"].'</td>
+          <td class="text-center">'.$row["password"].'</td>
           <td class="text-center">..</td>
           <td class="text-center">..</td>
           <td class="text-center">..</td>

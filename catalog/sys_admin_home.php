@@ -12,15 +12,8 @@
 <div class="sidenav">
   <a href="cont.php"><i class="fa fa-address-card"></i>  Cont</a>
 
-  <a href="users2.php"><i class="fa fa-users"></i>  Users</a>
+  <a href="users3.php"><i class="fa fa-users"></i>  Users</a>
   <a href="https://calendar.google.com/calendar/u/0/r"><i class="fa fa-calendar-minus-o"></i> Calendar</a>
-
-
-  <a href="users.php"><i class="fa fa-users"></i>  Users</a>
-  <a href="https://calendar.google.com/calendar/u/0/r"><i class="fa fa-calendar-minus-o"></i> Calendar</a>
-
-
-
 
   <button class="dropdown-btn"><i class="fa fa-sticky-note-o"></i> Log as
     <i class="fa fa-caret-down"></i>
@@ -34,35 +27,19 @@
     <a href="student_home.php">Student</a>
   </div>
 
-<!--
-=======
-
->>>>>>> b047e3e26f83d4276070922f024067fe006b2d17
-  <button class="dropdown-btn"><i class="fa fa-sticky-note-o"></i> C.R.U.D.
-    <i class="fa fa-caret-down"></i>
-  </button>
-  <div class="dropdown-container">
-<<<<<<< HEAD
-  <a href="sys_admin_home_sys_admin.php">Sys_Admin</a>
-=======
->>>>>>> b047e3e26f83d4276070922f024067fe006b2d17
-    <a href="sys_admin_home_admin.php">Admin</a>
-    <a href="sys_admin_home_profesor.php">Teacher</a>
-    <a href="sys_admin_home_student.php">Student</a>
-  </div>
-<<<<<<< HEAD
--->
-
-
   <a href="logout.php"><i class="fa fa-window-close"></i> Logout</a>
 </div>
 
 <div class="main">
-  <h2>Catalog online pentru seminarii și laboaratoare </h2>
-  <br>
-  <p>Administratorii pot adăuga, vizualiza, modifica și șterge utilizatori de tip profesor, student.</p>
-  <p>Administratorii pot realiza toate activitățile realizate de profesori și studenți.</p>
+  <div>
+    <h2>Catalog online pentru seminarii și laboaratoare </h2>
+    <br>
+    <p>Administratorii pot adăuga, vizualiza, modifica și șterge utilizatori de tip profesor, student.</p>
+    <p>Administratorii pot realiza toate activitățile realizate de profesori și studenți.</p>
+  </div>
+  <div>
 
+  </div>
 </div>
 
 <script>

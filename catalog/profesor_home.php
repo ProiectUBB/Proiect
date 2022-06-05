@@ -11,19 +11,8 @@
 <div class="sidenav">
   <a href="cont.php"><i class="fa fa-address-card"></i>  Cont</a>
   <a href="https://calendar.google.com/calendar/u/0/r"><i class="fa fa-calendar-minus-o"></i> Calendar</a>
-  <button class="dropdown-btn"><i class="fa fa-sticky-note-o"></i> Seminars
-    <i class="fa fa-caret-down"></i>
-  </button>
-  <div class="dropdown-container">
-    <a href="#">Attendances</a>
-  </div>
-  <button class="dropdown-btn"><i class="fa fa-cogs"></i> Labs
-    <i class="fa fa-caret-down"></i>
-  </button>
-  <div class="dropdown-container">
-    <a href="#">Attednances</a>
-    <a href="#">Grades</a>
-  </div>
+  <a href="teacher_seminar.php"><i class="fa fa-sticky-note-o"></i> Seminars</a>
+  <a href="teacher_laborator.php"><i class="fa fa-cogs"></i>Labs</a>
   <a href="logout.php"><i class="fa fa-window-close"></i> Logout</a>
 </div>
 

@@ -1,6 +1,6 @@
 <?php
 require 'header.php';
-$id_user=0;
+
 $username = "";
 $password = "";
 $id_role = "";
@@ -8,19 +8,21 @@ $first_name = "";
 $last_name = "";
 $email = "";
 
-$sql = "SELECT * FROM users";
+$sql = "SELECT * FROM users ORDER BY username ";
 $result = $conn->query($sql);
 $nrRows = mysqli_num_rows($result);
-
-?>
+ ?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Catalog</title>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto|Varela+Round">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -28,6 +30,7 @@ $nrRows = mysqli_num_rows($result);
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
 <link rel="stylesheet" href="css/users2.css">
+<link rel="stylesheet" href="css/homepage.css"> -->
 
 <script>
 $(document).ready(function(){
@@ -57,7 +60,29 @@ $(document).ready(function(){
 
 </head>
 <body>
-	<div class="container-xl">
+  <div class="sidenav">
+    <a href="cont.php"><i class="fa fa-address-card "></i>  Cont</a>
+
+    <a href="users3.php" style="color: #f1f1f1"><i class="fa fa-users "></i>  Users</a>
+    <a href="https://calendar.google.com/calendar/u/0/r"><i class="fa fa-calendar-minus-o"></i> Calendar</a>
+
+
+    <button class="dropdown-btn "><i class="fa fa-sticky-note-o"></i> Log as
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+
+    <a href="sys_admin_home_CRUD.php">Sys Admin</a>
+
+      <a href="admin_home.php">Admin</a>
+      <a href="profesor_home.php">Teacher</a>
+      <a href="student_home.php">Student</a>
+    </div>
+
+    <a href="logout.php"><i class="fa fa-window-close"></i> Logout</a>
+  </div>
+
+  <div class="container-xxl">
 		<div class="table-responsive">
 			<div class="table-wrapper">
 				<div class="table-title">
@@ -68,12 +93,13 @@ $(document).ready(function(){
 						<div class="col-sm-6">
 							<a href="#addUserModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New User</span></a>
 							<a href="#deleteUserModal" class="btn btn-danger" data-toggle="modal" name="delete"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>
-						</div>
+              <a href="sortUsername.php" class="btn btn-primary" data-toggle="modal"><i class="material-icons">&#xE164;</i> <span>Sort </span></a>
+            </div>
 					</div>
 				</div>
 				<table class="table table-striped table-hover">
 					<thead>
-						<tr>
+						<tr bgcolor="#B6B6B6">
 							<th>
 								<span class="custom-checkbox">
 									<input type="checkbox" id="selectAll">
@@ -85,6 +111,7 @@ $(document).ready(function(){
 							<th>First name</th>
 							<th>Last name</th>
 							<th>Email</th>
+              <th>Operations</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -240,5 +267,6 @@ $(document).ready(function(){
 			</div>
 		</div>
 	</div>
+
 </body>
 </html>

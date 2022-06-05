@@ -4,11 +4,20 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="css/index.css">
 
-<body>
+<body style="background-color: #DEDEDE">
 
-<h1>Universitatea Babeș-Bolyai</h1>
-<h2>Catalog online pentru seminarii și laboaratoare  </h2>
+<header class="header">
 
+	<div id="row">
+	  <div class="column">
+			<h1>Universitatea Babeș-Bolyai</h1>
+			<h2>Catalog online pentru seminarii și laboaratoare  </h2>
+	  </div>
+	  <div class="column">
+				<img src="images/ubb.jpg" style="border-radius: 50%; " >
+	  </div>
+	</div>
+</header>
 	<div>
 		<div class="navbar">
 		  <a class="active" href="index.php"><i class="fa fa-fw fa-home"></i> Home</a>
@@ -17,7 +26,7 @@
 		  <a href="contact.php"><i class="fa fa-fw fa-envelope"></i> Contact</a>
 
 		</div>
-    <img class="bg-img" src="images/background.jpg" style="width:100% ";
+    <img class="bg-img" src="images/background.jpg" style="width:100% ">
 
 
 	</div>

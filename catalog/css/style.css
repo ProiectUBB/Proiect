@@ -1,0 +1,120 @@
+/* HOMEPAGE NAVBAR */
+.navbar {
+    background-color: #555;
+}
+.navbar .nav-item:hover {
+    background-color: #000;
+}
+.navbar a {
+    float: left;
+    padding: 20px;
+    color: white;
+    text-decoration: none;
+    font-size: 20px;
+}
+.active {
+    background-color: #020d09;
+}
+
+/* LOGIN PAGE */
+.input-container {
+    display: -ms-flexbox; /* IE10 */
+    display: flex;
+    width: 100%;
+    margin-bottom: 15px;
+}
+.input-group-text {
+    min-width: 75px;
+    background-color: #434d49;
+    color: white;
+    text-align: center;
+    padding: 24px;
+}
+.input-field:focus {
+    border: 2px solid #434d49;
+}
+.error {
+    color: red;
+}
+  
+/* SIDEBAR MENU */
+/* Fixed sidenav, full height */
+.sidenav {
+    height: 100%;
+    width: 250px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #111;
+    overflow-x: hidden;
+    padding-top: 50px;
+  
+  }
+  
+  /* Style the sidenav links and the dropdown button */
+  .sidenav a, .dropdown-btn {
+    padding: 40px 8px 6px 16px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #818181;
+    display: block;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    outline: none;
+  }
+  
+  /* On mouse-over */
+  .sidenav a:hover, .dropdown-btn:hover {
+    color: #f1f1f1;
+  }
+  
+  /* Main content */
+  .main {
+    margin-left: 250px; /* Same as the width of the sidenav */
+    font-size: 20px; /* Increased text to enable scrolling */
+    padding: 0px 10px;
+    background-color: #a8a8a8;
+  }
+  
+  /* Add an active class to the active dropdown button */
+  .active {
+    background-color: #a8a8a8;
+    color: white;
+  }
+  
+  /* Dropdown container (hidden by default). Optional: add a lighter background color and some left padding to change the design of the dropdown content */
+  .dropdown-container {
+    display: none;
+    background-color: #262626;
+    padding-left: 8px;
+  }
+  
+  /* Optional: Style the caret down icon */
+  .fa-caret-down {
+    float: right;
+    padding-right: 8px;
+  }
+  
+  /* Some media queries for responsiveness */
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+  
+  
+  .CRUD{
+    height: 100px;
+    width:60px;
+    background-color:white;
+    text-align: center;
+  }
+  
+  .CrReUpDe{
+    height: 100px;
+    background-color:red;
+  }
+  

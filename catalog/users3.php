@@ -1,36 +1,17 @@
 <?php
-require 'header.php';
+require_once 'functions.php';
 
-$username = "";
-$password = "";
-$id_role = "";
-$first_name = "";
-$last_name = "";
-$email = "";
+if (!userIsLoggedIn()) { header("Location:index.php"); }
+if ($_SESSION['idRol'] != 1) { header("Location:index.php"); }
 
-$sql = "SELECT * FROM users ";
+require_once 'temp-header.php';
+require_once 'temp-sidenav.php';
+
+require_once 'config.php';
+
+$sql = "SELECT u.*, r.role_name FROM users u JOIN roles r ON u.id_role = r.id_role";
 $result = $conn->query($sql);
-$nrRows = mysqli_num_rows($result);
- ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Catalog</title>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-
-<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script>
-<link rel="stylesheet" href="css/users2.css">
-<link rel="stylesheet" href="css/homepage.css"> -->
+?>
 
 <script>
 $(document).ready(function(){
@@ -57,31 +38,6 @@ $(document).ready(function(){
 	});
 });
 </script>
-
-</head>
-<body>
-  <div class="sidenav">
-    <a href="cont.php"><i class="fa fa-address-card "></i>  Cont</a>
-
-    <a href="users3.php" style="color: #f1f1f1"><i class="fa fa-users "></i>  Users</a>
-    <a href="https://calendar.google.com/calendar/u/0/r"><i class="fa fa-calendar-minus-o"></i> Calendar</a>
-
-
-    <button class="dropdown-btn "><i class="fa fa-sticky-note-o"></i> Log as
-      <i class="fa fa-caret-down"></i>
-    </button>
-    <div class="dropdown-container">
-
-    <a href="sys_admin_home_CRUD.php">Sys Admin</a>
-
-      <a href="admin_home.php">Admin</a>
-      <a href="profesor_home.php">Teacher</a>
-      <a href="student_home.php">Student</a>
-    </div>
-
-    <a href="logout.php"><i class="fa fa-window-close"></i> Logout</a>
-  </div>
-
   <div class="container-xxl">
 		<div class="table-responsive">
 			<div class="table-wrapper">
@@ -111,15 +67,13 @@ $(document).ready(function(){
 							<th>First name</th>
 							<th>Last name</th>
 							<th>Email</th>
-              <th>Operations</th>
+              				<th>Operations</th>
 						</tr>
 					</thead>
 					<tbody>
 	          <?php
 	          if ($result->num_rows > 0) {
 	              while($row = $result->fetch_assoc()) {
-	                $username1=$row['username'];
-	                $idUser=$row['id_user'];
 	          ?>
 	          <tr>
 	            <td>
@@ -129,7 +83,7 @@ $(document).ready(function(){
 	              </span>
 	            </td>
 	            <td><?php echo $row['username'] ?></td>
-	            <td><?php echo $row['id_role'] ?></td>
+	                    <td><?php echo $row['role_name'] ?></td>
 	            <td><?php echo $row['first_name'] ?></td>
 	            <td><?php echo $row['last_name'] ?></td>
 	            <td><?php echo $row['email'] ?></td>
@@ -177,21 +131,29 @@ $(document).ready(function(){
 							<label>Username</label>
 							<input type="text" name="username" class="form-control" value=""  required>
 						</div>
-	          <div class="form-group">
-	            <label>Password</label>
-	            <input type="password" name="password" class="form-control" value=""  required>
-	          </div>
+						<div class="form-group">
+							<label>Password</label>
+							<input type="password" name="password" class="form-control" value=""  required>
+						</div>
+						<div class="form-group">
+							<label>Verify Password</label>
+							<input type="password" name="verifyPassword" class="form-control" value=""  required>
+						</div>
 						<div class="form-group">
 							<label>Role</label>
-							<input type="text" name="id_role" class="form-control" value="" required>
+							<select class="form-select" aria-label="Default select example" name="id_role">
+								<option value="2">Admin</option>
+								<option value="4">Profesor</option>
+								<option value="3" selected>Student</option>
+							</select>
 						</div>
 						<div class="form-group">
 							<label>First name</label>
-							<input type="text" name="first_name" class="form-control" value=""required>
+							<input type="text" name="firstName" class="form-control" value=""required>
 						</div>
 						<div class="form-group">
 							<label>Last name</label>
-						<input type="text" name="last_name" class="form-control" value=""required>
+						<input type="text" name="lastName" class="form-control" value=""required>
 						</div>
 						<div class="form-group">
 							<label>Email</label>
@@ -268,5 +230,4 @@ $(document).ready(function(){
 		</div>
 	</div>
 
-</body>
-</html>
+<?php require_once 'temp-footer.php'; ?>

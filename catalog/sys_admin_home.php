@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 
 <html>
 <head>
@@ -7,9 +7,9 @@
 <link rel="stylesheet" href="css/homepage.css">
 
 </head>
-<body>
+<body> -->
 
-<div class="sidenav">
+<!-- <div class="sidenav">
   <a href="cont.php"><i class="fa fa-address-card"></i>  Cont</a>
 
   <a href="users3.php"><i class="fa fa-users"></i>  Users</a>
@@ -28,23 +28,31 @@
   </div>
 
   <a href="logout.php"><i class="fa fa-window-close"></i> Logout</a>
-</div>
+</div> -->
+<?php
+require_once 'functions.php';
 
-<div class="main">
-  <div>
+if (!userIsLoggedIn()) { header("Location:index.php"); }
+if ($_SESSION['idRol'] != 1) { header("Location:index.php"); }
+
+require_once 'temp-header.php';
+require_once 'temp-sidenav.php';
+
+require_once 'config.php';
+?>
+
+<div class="container">
+  <div class="row">
+    <div class="col">
     <h2>Catalog online pentru seminarii și laboaratoare </h2>
     <br>
     <p>Administratorii pot adăuga, vizualiza, modifica și șterge utilizatori de tip profesor, student.</p>
     <p>Administratorii pot realiza toate activitățile realizate de profesori și studenți.</p>
-  </div>
-  <div>
-
-  </div>
+    </div>
+  </div>  
 </div>
 
 <script>
-
-
 /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
 var dropdown = document.getElementsByClassName("dropdown-btn");
 var i;
@@ -62,5 +70,6 @@ for (i = 0; i < dropdown.length; i++) {
 }
 </script>
 
-</body>
-</html>
+<!-- </body>
+</html> -->
+<?php require_once 'temp-footer.php'; ?>

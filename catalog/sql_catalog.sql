@@ -29,8 +29,8 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `classes` (
   `id_class` int(11) NOT NULL,
-  `class_name` varchar(64) NOT NULL,
-  `description` varchar(256) DEFAULT NULL
+  `class_name` varchar(256) NOT NULL,
+  `description` varchar(512) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------

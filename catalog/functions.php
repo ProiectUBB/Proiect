@@ -14,4 +14,13 @@ function getData($method,$key){
 	return $value;
 }
 
+function userIsLoggedIn() {
+    session_start();
+    
+    if (isset($_SESSION["valid"]) && isset($_SESSION["Username"])) {
+        return true;
+    }
+
+    return false;
+}
 ?>

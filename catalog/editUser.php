@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
     $result=mysqli_query($conn,$sql);
 
     if($result){
-      header("Location: http://localhost/Proiect11/catalog/users3.php"); /* Redirect browser */
+      header("Location: http://localhost/Proiect11/catalog/users.php"); /* Redirect browser */
       exit();
     }else{
       die(mysqli_error($conn));

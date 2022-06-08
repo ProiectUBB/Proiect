@@ -1,30 +1,46 @@
-<!DOCTYPE html>
-<html>
-<head>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="css/contact.css">
-</head>
-<body>
+<?php 
+require_once 'temp-header.php'; 
+?>
 
-<h3>Contact Form</h3>
+<header>
+    <div class="container-fluid">
+        <?php require_once 'temp-subheader.php'; ?>
 
-<div class="container">
-  <form action="/action_page.php">
-    <label for="fname">First Name</label>
-    <input type="text" id="fname" name="firstname" placeholder="Your name...">
+        <?php require_once 'temp-mainnav.php'; ?>
+    </div>
+</header>
 
-    <label for="lname">Last Name</label>
-    <input type="text" id="lname" name="lastname" placeholder="Your last name...">
+<div class="container-fluid">
+    <div class="row p-5">
+        <div class="col">
+            <h4>Contact Form</h4>
 
-    <label for="lname">Email</label>
-    <input type="text" id="email" name="email" placeholder="Your email...">
+            <form class="m-1 bg-light p-5" action="#">
+                <div class="mb-3">
+                    <label for="firstname" class="form-label">First Name</label>
+                    <input type="text" class="form-control" id="firstname" placeholder="Your name...">
+                </div>
 
-    <label for="subject">Subject</label>
-    <textarea id="subject" name="subject" placeholder="Write something..." style="height:200px"></textarea>
+                <div class="mb-3">
+                    <label for="lastname" class="form-label">Last Name</label>
+                    <input type="text" class="form-control" id="lastname" placeholder="Your last name...">
+                </div>
 
-    <input type="submit" value="Submit">
-  </form>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email address</label>
+                    <input type="email" class="form-control" id="email" aria-describedby="emailHelp" placeholder="Your email...">
+                    <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
+                </div>
+
+                <div class="mb-3">
+                    <label for="subject" class="form-label">Subject</label>
+                    <textarea class="form-control" id="subject" rows="3" placeholder="Write something..."></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-lg btn-success">Submit</button>
+            </form>
+        </div>
+    </div>   
 </div>
 
-</body>
-</html>
+<?php require_once 'temp-footer.php'; ?>

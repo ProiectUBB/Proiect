@@ -1,23 +1,47 @@
 <?php
-require 'header.php';
+require_once 'functions.php';
 
-$userId = $_GET['idUser'];
-echo "am intrat in delete";
-echo "id ul userului e ".$userId;
+if (!userIsLoggedIn()) { header("Location:/catalog/index.php"); }
 
+require_once 'config.php';
 
-//write a query that deletes the student by the given student ID
-$sql1 = "DELETE FROM users WHERE id_user = $userId";
-$result1=mysqli_query($conn,$sql1);
+if(isset($_POST['submit'])) {
+/* Deleting multiple users at once. */
+    if(isset($_POST['chk_id']) && !empty($_POST['chk_id'])) {
+        /* Taking the array of the checkboxes and turning it into a string. */
+        $all=implode(",",$_POST["chk_id"]);
+        /* Deleting multiple users at once. */
+        $sql = "DELETE FROM users WHERE id_user IN ($all)";
+        $result = mysqli_query($conn,$sql);
 
-if($result1){
-  header("Location: http://localhost/Proiect11/catalog/users3.php"); /* Redirect browser */
-  exit();
-  }else{
-    echo "nu s-au sters";
-    die(mysqli_error($conn));
+        if ($result) {
+            header("Location:users.php");
+        } else {
+            echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+        }
+    } else {
+        header("Location:users.php");
+    }
+} else {
+    /* Checking if the user is not the sysadmin, if it is not, it will delete the user. */
+    $userId = $_GET['idUser'];
+    if ($userId != 1) {
+        if (isset($userId) && !empty($userId)) {
+            $sql = "DELETE FROM users WHERE id_user = $userId";
+            $result = mysqli_query($conn,$sql);
+    
+            if ($result) {
+                header("Location:users.php");
+            } else {
+                echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+            }
+        } else {
+            header("Location:users.php");
+        }
+    }else {
+        header("Location:users.php");
+    }    
+}
 
-  }
 exit();
-
 ?>

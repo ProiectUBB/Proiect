@@ -2,7 +2,7 @@
 require_once 'temp-header.php';
 require_once 'functions.php';
 
-
+/* If the user is logged in, redirect to index.php */
 if (userIsLoggedIn()) { header("Location: index.php"); }
 
 // definirea valorilor pentru erori ca fiind goale. Altfel la prima afisare a formularului ar da o eroare
@@ -24,6 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $firstName1 = sanitizare($_POST['firstName']);
     $lastName1 = sanitizare($_POST['lastName']);
 
+    /* It's a type casting. It's converting the value of `` to an integer. */
     $id_role1 = (int) $id_role1;
 
     require_once 'config.php';
@@ -34,21 +35,26 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $GLOBALS['error'] = "xxx";
         $error++;
     } else {
+        /* It's checking if the username is less than 3 characters long. If it is, it will display an
+        error message. */
         if (strlen($username1) < 3) {
             $usernameErr = "* username must be at least 3 characters long";
             $error++;
         } 
         
+        /* It's checking if the username is less than 3 characters long. If it is, it will display an
+                error message. */
         if (!preg_match("/^[a-zA-Z0-9_]*$/", $username1)) {
             $usernameErr = "* only letters, numbers and underscore are accepted";
             $error++;
         }
 
-
+        /* It's checking if the username already exists in the database. */
         $query = "SELECT * FROM `users` WHERE username = '$username1'";
         $result = mysqli_query($conn, $query);
         $rows = mysqli_num_rows($result);
 
+        /* It's checking if the username already exists in the database. */
         if ($rows > 0) {
             $usernameErr = "* username already exists";
             $error++;
@@ -60,6 +66,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $passwordErr = "* password is required";
         $error++;
     } else {
+        /* It's checking if the password is less than 3 characters long. If it is, it will display an
+        error message. If it's not empty, it will check if the password and the verify password are
+        the same. If they are not, it will display an error message. */
         if (strlen($password1) < 2) {
             $passwordErr = "* password must be at least 3 characters long";
             $error++;
@@ -78,6 +87,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     
     // Verify Email
     if (empty($email1)) {       
+        /* It's checking if the email is empty. If it is, it will display an error message. If it's not
+        empty, it will check if the email is valid. If it's not, it will display an error message.
+        It will also check if the email already exists in the database. If it does, it will display
+        an error message. */
         $emailErr = "* email is required";
         $error++;
     } else {
@@ -98,6 +111,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Verify First Name
     if (empty($firstName1)) {       
+        /* It's checking if the first name is empty. If it is, it will display an error message. If
+        it's not empty, it will check if the first name is valid. If it's not, it will display an error message. */
         $firstNameErr = "* first name is required";
         $error++;
     } else {
@@ -109,6 +124,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Verify Last Name
     if (empty($lastName1)) {       
+        /* It's checking if the last name is empty. If it is, it will display an error message. If it's
+        not empty, it will check if the last name is valid. If it's not, it will display an
+        error message. */
         $lastNameErr = "* first name is required";
         $error++;
     } else {
@@ -124,6 +142,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // If no errors and everything is correct proceed to add user to db
     if ($error == 0) {
+        /* It's inserting the values from the form into the database. */
         // $password1 = md5($password1);
         // $currentDate = date('Y-m-d');
         $query = "INSERT INTO `users`(`id_role`, `username`, `password`, `first_name`, `last_name`, `email`) VALUES ($id_role1, '$username1','$password1','$lastName1','$firstName1','$email1')";

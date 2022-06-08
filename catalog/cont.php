@@ -5,6 +5,7 @@ if (!userIsLoggedIn()) { header("Location:index.php"); }
 
 require_once 'temp-header.php';
 require_once 'temp-sidenav.php';
+require_once 'temp-dashboard-header.php';
 ?>
 <div class="container">
   <div class="row">

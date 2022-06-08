@@ -1,7 +1,4 @@
-<?php
-require_once 'temp-header.php';
-
-?>
+<?php require_once 'temp-header.php'; ?>
 
 <header>
     <div class="container-fluid">
@@ -18,8 +15,5 @@ require_once 'temp-header.php';
         </div>
     </div>   
 </div>
-<?php
 
-
-require_once 'temp-footer.php';
-?>
+<?php require_once 'temp-footer.php'; ?>

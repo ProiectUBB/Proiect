@@ -2,12 +2,9 @@
 require_once 'temp-header.php';
 require_once 'functions.php';
 
+if (userIsLoggedIn()) { header("Location: index.php");}
 
-if (userIsLoggedIn()) {
-    header("Location: index.php");
-    // echo "user is logged in";
-}
-
+/* Initializing the variables. */
 $usererr=$pswerr=$userPassErr="";
 $user=$psw="";
 $idRol=0;
@@ -20,8 +17,10 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
     require_once 'config.php';
 
-//Validare 
 	if (empty($_POST["user"])) {
+        /* Checking if the username is empty and if it is, it will display an error message. If it is
+        not empty, it will check if the username contains only letters, numbers and spaces. If it
+        does not, it will display an error message. */
         $usererr="Utilizatorul este obligatoriu!";
 	    $eroare=1;
 	} else {
@@ -34,7 +33,8 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 	}
     
     if (empty($_POST["password"])) {
-	    $pswerr="Parola este obligatorie!";
+	    /* Checking if the password is empty and if it is, it will display an error message. */
+        $pswerr="Parola este obligatorie!";
 	    $eroare=1;
 	}
 
@@ -44,7 +44,9 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
 		$result = mysqli_query($conn, $sql);
 
-		if (mysqli_num_rows($result) > 0){
+		/* Checking if the username and password are correct. If they are, it will create a session and
+        redirect the user to the index page. If they are not, it will display an error message. */
+        if (mysqli_num_rows($result) > 0){
             session_start();
 
             $_SESSION["valid"] = true;

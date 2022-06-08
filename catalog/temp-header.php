@@ -18,7 +18,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css" rel="stylesheet" type="text/css">
 
     <!-- Custom styles for this template -->
-    <link rel="stylesheet" href="css/homepage.css" type="text/css">
+    <!-- <link rel="stylesheet" href="css/homepage.css" type="text/css"> -->
     <link href="css/style.css" rel="stylesheet" type="text/css">
     <!-- <link href="css/users.css" rel="stylesheet" type="text/css"> -->
     <link href="css/users2.css" rel="stylesheet" type="text/css">
@@ -40,7 +40,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
 </head>
 
-<body>
+<body id="page-top">
 <?php 
 session_start(); 
 ?>

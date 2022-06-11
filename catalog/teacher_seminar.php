@@ -362,10 +362,14 @@ $(document).ready(function(){
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-list-alt"></span>
             </span>
-            <input type="radio" class="form-control" name="attendance" id="present" value="present">
-			<label for="attendance">present</label>  
-					<input type="radio" class="form-control" name="attendance" id="absent" value="absent">
-					<label for="attendance">absent</label>
+            <div class="form-control">
+				<input type="radio"  id="present" name="fav_language" value="present">
+				<label for="present">present</label><br>
+			</div>
+			<div class="form-control">
+				<input type="radio"  id="absent" name="fav_language" value="absent">
+				<label for="absent">absent</label><br><br>
+			</div>
         </div>
         <div class="alert alert-warning hidden" id="attendance" role="alert" style="padding: 5px 15px">
             <span class="glyphicon glyphicon-exclamation-sign"></span>

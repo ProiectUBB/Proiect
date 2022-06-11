@@ -301,8 +301,6 @@ $(document).ready(function(){
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="css/homepage.css">
-
-
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/css/bootstrap.min.css">
     <link rel="stylesheet" href="includes/style.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
@@ -310,17 +308,12 @@ $(document).ready(function(){
     <script src="includes/script.js"></script>
     <meta name="viewport" content="initial-scale=1, user-scalable=no">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
 </head>
 <body>
-
 <div class="sidenav">
   <a href="cont.php"><i class="fa fa-address-card"></i>  Cont</a>
   <a href="users.php"><i class="fa fa-users"></i>  Users</a>
   <a href="https://calendar.google.com/calendar/u/0/r"><i class="fa fa-calendar-minus-o"></i> Calendar</a>
-  
-  
-
   <button class="dropdown-btn"><i class="fa fa-sticky-note-o"></i> Log as
     <i class="fa fa-caret-down"></i>
   </button>
@@ -330,19 +323,10 @@ $(document).ready(function(){
     <a href="sys_admin_home_as_profesor_CRUD.php">Teacher</a>
     <a href="sys_admin_home_as_student_CRUD.php">Student</a>
   </div>
-
-
   <a href="logout.php"><i class="fa fa-window-close"></i> Logout</a>
 </div>
-
-
-
-
-
 <div class="dam_note">
-	
  <div class="container">
-
     <div>
         <!-- only show this element when the isnt on mobile -->
         <h1 class="hidden-xs hidden-sm">Student Grade Table
@@ -354,7 +338,6 @@ $(document).ready(function(){
         </h3>
     </div>
     <hr />
-
     <div class="student-add-form pull-right col-sm-3">
         <h4>Add Student</h4>
         <div class="input-group" id="firstDiv" style = "margin-bottom: 10px">
@@ -367,7 +350,6 @@ $(document).ready(function(){
             <span class="glyphicon glyphicon-exclamation-sign"></span>
             Must contain at least 3 letters
         </div>
-
 		<div class="input-group" id="firstDiv" style = "margin-bottom: 10px">
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-user"></span>
@@ -378,7 +360,6 @@ $(document).ready(function(){
             <span class="glyphicon glyphicon-exclamation-sign"></span>
             Must contain at least 3 letters
         </div>
-
         <div class="input-group" id="secondDiv" style = "margin-bottom: 10px">
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-list-alt"></span>
@@ -390,30 +371,19 @@ $(document).ready(function(){
             <span class="glyphicon glyphicon-exclamation-sign"></span>
             Course name required
         </div>
-
-
 		<div class="input-group" id="secondDiv" style = "margin-bottom: 10px">
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-list-alt"></span>
             </span>
-			 
-            <input type="radio" class="form-control" name="attendance" id="present" value="present">
-			<label for="attendance">present</label>  
-
-					<input type="radio" class="form-control" name="attendance" id="absent" value="absent">
-				
-					<label for="attendance">absent</label>
+			<div class="form-control">
+				<input type="radio"  id="present" name="fav_language" value="present">
+				<label for="present">present</label><br>
+			</div>
+			<div class="form-control">
+				<input type="radio"  id="absent" name="fav_language" value="absent">
+				<label for="absent">absent</label><br><br>
+			</div>
         </div>
-        <div class="alert alert-warning hidden" id="attendance" role="alert" style="padding: 5px 15px">
-            <span class="glyphicon glyphicon-exclamation-sign"></span>
-            Attendance required
-        </div>
-
-
-
-
-
-
 		<div class="input-group" id="thirdDiv" style = "margin-bottom: 10px">
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
@@ -425,11 +395,6 @@ $(document).ready(function(){
             <span class="glyphicon glyphicon-exclamation-sign"></span>
             Must be between 0-100
         </div>
-
-
-
-
-
         <div class="input-group" id="thirdDiv" style = "margin-bottom: 10px">
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-education"></span>
@@ -441,14 +406,11 @@ $(document).ready(function(){
             <span class="glyphicon glyphicon-exclamation-sign"></span>
             Must be between 0-100
         </div>
-
         <button type="button" class="btn-success btn-outline-light btn-sm addBtn" style = "margin-bottom: 10px" onclick=""><span class="glyphicon glyphicon-plus"></span> Add</button>
         <button type="button" class="btn-default btn-sm" style = "margin-bottom: 10px" onclick="">Cancel</button>
-
         <div class="displayError">
         </div>
     </div>
-
     <div class="student-list-container pull-left col-sm-6">
         <table class="student-list table table-hover">
             <thead class="thead">
@@ -461,12 +423,8 @@ $(document).ready(function(){
                 <th>Student Grade</th>
                 <th class="hidden-xs ">Operations</th>
                 <th class="visible-xs hidden-sm hidden-md hidden-lg">Ops</th>
-
             </tr>
             </thead>
-            <tbody>
-
-            </tbody>
         </table>
     </div>
 </div>
@@ -476,10 +434,8 @@ $(document).ready(function(){
 				<div class="modal-header">
 					<h3 class="modal-title bg-warning">Edit Student</h3>
 				</div>
-
 				<div class="modal-body">
 					<h5>Enter the new info:</h5>
-					
 					<div class="input-group" id="firstDiv" style = "margin-bottom: 10px">
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-user"></span>
@@ -490,7 +446,6 @@ $(document).ready(function(){
             <span class="glyphicon glyphicon-exclamation-sign"></span>
             Must contain at least 3 letters
         </div>
-
 		<div class="input-group" id="firstDiv" style = "margin-bottom: 10px">
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-user"></span>
@@ -501,7 +456,6 @@ $(document).ready(function(){
             <span class="glyphicon glyphicon-exclamation-sign"></span>
             Must contain at least 3 letters
         </div>
-
         <div class="input-group" id="secondDiv" style = "margin-bottom: 10px">
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-list-alt"></span>
@@ -513,30 +467,19 @@ $(document).ready(function(){
             <span class="glyphicon glyphicon-exclamation-sign"></span>
             Course name required
         </div>
-
-
 		<div class="input-group" id="secondDiv" style = "margin-bottom: 10px">
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-list-alt"></span>
             </span>
-			 
             <input type="radio" class="form-control" name="attendance" id="present" value="present">
 			<label for="attendance">present</label>  
-
-					<input type="radio" class="form-control" name="attendance" id="absent" value="absent">
-				
-					<label for="attendance">absent</label>
+				<input type="radio" class="form-control" name="attendance" id="absent" value="absent">
+				<label for="attendance">absent</label>
         </div>
         <div class="alert alert-warning hidden" id="attendance" role="alert" style="padding: 5px 15px">
             <span class="glyphicon glyphicon-exclamation-sign"></span>
             Attendance required
         </div>
-
-
-
-
-
-
 		<div class="input-group" id="thirdDiv" style = "margin-bottom: 10px">
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-calendar"></span>
@@ -548,11 +491,6 @@ $(document).ready(function(){
             <span class="glyphicon glyphicon-exclamation-sign"></span>
             Must be between 0-100
         </div>
-
-
-
-
-
         <div class="input-group" id="thirdDiv" style = "margin-bottom: 10px">
             <span class="input-group-addon">
                 <span class="glyphicon glyphicon-education"></span>
@@ -564,40 +502,29 @@ $(document).ready(function(){
             <span class="glyphicon glyphicon-exclamation-sign"></span>
             Must be between 0-100
         </div>
-
 					<div class="error"></div>
 				</div>
-
 				<div class="modal-footer">
 					<button class="btn btn-secondary cancelEditBtn">Cancel</button>
 					<button class="btn btn-success saveBtn">Save</button>
 				</div>
-
 			</div>
 		</div>
-
-
 		<div id="delModal" class="delModal" role="dialog">
 			<div class="modal-content">
 				<div class="modal-header">
 					<h3 class="modal-title bg-danger">Delete Student</h3>
 					<h5>Do you wish to delete this student?</h5>
-
 				</div>
-
 				<div class="modal-body del-modal-body">
-
 				</div>
-
 				<div class="modal-footer del-footer" id="del-modal-footer">
 					<button class="btn btn-secondary cancelDelBtn">Cancel</button>
 					<button class="btn btn-danger delBtn">Delete</button>
 				</div>
-
 			</div>  
 		</div>
 	</div>
-
 <!-- Edit Modal HTML -->
 <div id="addEmployeeModal" class="modal fade">
 	<div class="modal-dialog">
@@ -617,12 +544,6 @@ $(document).ready(function(){
 						<input type="radio" class="form-control" id="3" name="id_role" value="student">
 						<label for="student">sys-admin</label><br>
 					</div>
-
-
-			
-  
-
-
 				    <div class="form-group">
 						<label>Username</label>
 						<input type="text" class="form-control" required>
@@ -713,18 +634,11 @@ $(document).ready(function(){
 		</div>
 	</div>
 </div>
-
-
-
 </div>
-
 <script>
-
-
 /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
 var dropdown = document.getElementsByClassName("dropdown-btn");
 var i;
-
 for (i = 0; i < dropdown.length; i++) {
   dropdown[i].addEventListener("click", function() {
     this.classList.toggle("active");
@@ -737,6 +651,5 @@ for (i = 0; i < dropdown.length; i++) {
   });
 }
 </script>
-
 </body>
 </html>

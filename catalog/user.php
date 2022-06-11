@@ -10,7 +10,7 @@ require_once 'temp-dashboard-header.php';
 <div class="container">
   <div class="row">
     <div class="col">
-
+    <h2>Cont</h2>
 <?php 
     require_once 'config.php';
     

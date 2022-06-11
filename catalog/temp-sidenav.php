@@ -4,18 +4,13 @@ if (!userIsLoggedIn()) { header("Location:index.php"); }
 ?>
 
 <div class="sidenav">
-    
-<?php
-if ($_SESSION['idRol']==1){ $href = 'sys_admin_home.php';}
-    elseif ($_SESSION['idRol']==2) { $href = 'admin_home.php'; }
-    elseif ($_SESSION['idRol']==3) { $href = 'student_home.php'; }
-    elseif ($_SESSION['idRol']==4) { $href = 'profesor_home.php'; }
-echo '<a href="'.$href.'"><i class="fa fa-fw fa-home"></i>  Home</a>';
-?>
+  <a href="home.php"><i class="fa fa-fw fa-home"></i>  Home</a>
 
-  <a href="cont.php"><i class="fa fa-address-card"></i>  Cont</a>
+  <a href="user.php"><i class="fa fa-address-card"></i>  Cont</a>
 
   <a href="users.php"><i class="fa fa-users"></i>  Users</a>
+  
+  <a href="cursuri.php"><i class="fa fa-book"></i>  Cursuri</a>
 
   <a href="https://calendar.google.com/calendar/u/0/r"><i class="fa fa-calendar-minus-o"></i> Calendar</a>
 

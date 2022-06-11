@@ -61,15 +61,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 			while($row = $result->fetch_assoc()) {
                 $_SESSION['idRol'] = $row['id_role'];
 
-                if ($row['id_role']==1){
-                    header("Location:sys_admin_home.php");
-                }elseif ($row['id_role']==2) {
-                    header("Location:admin_home.php");
-                }elseif ($row['id_role']==3) {
-                    header("Location:student_home.php");
-                }elseif ($row['id_role']==4) {
-                    header("Location:profesor_home.php");
-                }
+                header("Location:home.php");
             }
         } else {
             $userPassErr = "Utilizatorul sau psw sunt incorecte!";

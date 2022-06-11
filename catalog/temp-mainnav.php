@@ -12,24 +12,11 @@ require_once 'functions.php';
                 <li class="nav-item">                                    
                     <a class="nav-link" aria-current="page" href="index.php"><i class="fa fa-fw fa-home"></i> Home</a>
                 </li>
-                <?php if (userIsLoggedIn()) { 
-                    if ($_SESSION['idRol'] == 1) { ?>
+                <?php if (userIsLoggedIn()) { ?>
                     <li class="nav-item">
-                        <a class="nav-link" href="sys_admin_home.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
+                        <a class="nav-link" href="home.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
                     </li>
-                <?php } elseif ($_SESSION['idRol'] == 2) { ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="admin_home.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                    </li>
-                <?php } elseif ($_SESSION['idRol'] == 4) { ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="profesor_home.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                    </li>
-                <?php } elseif ($_SESSION['idRol'] == 3) { ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="student_home.php"><i class="fa fa-fw fa-dashboard"></i> Dashboard</a>
-                    </li>
-                <?php } } else { ?>
+                <?php } else { ?>
                     <li class="nav-item">
                         <a class="nav-link" href="login.php"><i class="fa fa-fw fa-user"></i> Login</a>
                     </li> 

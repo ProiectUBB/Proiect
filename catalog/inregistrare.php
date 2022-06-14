@@ -146,7 +146,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         // $password1 = md5($password1);
         // $currentDate = date('Y-m-d');
         $query = "INSERT INTO `users`(`id_role`, `username`, `password`, `first_name`, `last_name`, `email`) VALUES ($id_role1, '$username1','$password1','$lastName1','$firstName1','$email1')";
-        echo $query;
+        // echo $query;
         $result = mysqli_query($conn, $query);
 
         if ($result) {     

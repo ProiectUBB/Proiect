@@ -14,7 +14,7 @@ require_once 'temp-dashboard-header.php';
 <?php 
     require_once 'config.php';
     
-    $sql = "SELECT u.username, u.email, u.first_name, u.last_name, r.role_name FROM users u JOIN roles r ON u.id_role = r.id_role WHERE username='".$_SESSION['Username']."'";
+    $sql = "SELECT u.username, u.email, u.first_name, u.last_name, u.reg_date, r.role_name FROM users u JOIN roles r ON u.id_role = r.id_role WHERE username='".$_SESSION['Username']."'";
     $result = $conn -> query($sql);
     $row = $result -> fetch_row();
     
@@ -22,7 +22,8 @@ require_once 'temp-dashboard-header.php';
     echo 'Email: ' . $row[1] . '<br>';  
     echo 'First Name: ' . $row[2] . '<br>';  
     echo 'Last Name: ' . $row[3] . '<br>';  
-    echo 'Role: ' . $row[4] . '<br>';  
+    echo 'Role: ' . $row[5] . '<br>';  
+    echo 'Regitration date: ' . $row[4] . '<br>';  
 ?>
     </div>
   </div>  

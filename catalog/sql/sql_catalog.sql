@@ -8,7 +8,6 @@
 -- PHP Version: 8.0.13
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -42,7 +41,8 @@ CREATE TABLE `classes` (
 CREATE TABLE `laboratory` (
   `id_laboratory` int(11) NOT NULL,
   `id_class` int(11) NOT NULL,
-  `laboratory_name` varchar(64) NOT NULL
+  `laboratory_name` varchar(64) NOT NULL,
+  `laboratory_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -76,10 +76,10 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`id_role`, `role_name`) VALUES
-(1, 'sysAdmin'),
+(1, 'sysadmin'),
 (2, 'admin'),
-(3, 'student'),
-(4, 'teacher');
+(3, 'teacher'),
+(4, 'student');
 
 -- --------------------------------------------------------
 
@@ -90,7 +90,8 @@ INSERT INTO `roles` (`id_role`, `role_name`) VALUES
 CREATE TABLE `seminar` (
   `id_seminar` int(11) NOT NULL,
   `id_class` int(11) NOT NULL,
-  `seminar_name` varchar(64) NOT NULL
+  `seminar_name` varchar(64) NOT NULL,
+  `seminar_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
@@ -120,7 +121,8 @@ CREATE TABLE `users` (
   `password` varchar(32) NOT NULL,
   `first_name` varchar(32) NOT NULL,
   `last_name` varchar(32) NOT NULL,
-  `email` varchar(64) NOT NULL
+  `email` varchar(64) NOT NULL,
+  `reg_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
@@ -128,10 +130,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id_user`, `id_role`, `username`, `password`, `first_name`, `last_name`, `email`) VALUES
-(1, 1, 'sysAdmin1', 'sysAdmin1', 'sysAdmin1', 'sysAdmin1', 'sysAdmin1@gmail.com'),
-(2, 2, 'admin1', 'admin1', 'admin1', 'admin1', 'admin1@gmail.com'),
-(3, 4, 'teacher1', 'teacher1', 'teacher1', 'teacher1', 'teacher1@gmail.com'),
-(4, 3, 'student1', 'student1', 'student1', 'student1', 'student1@gmail.com');
+(1, 1, 'sysadmin', 'sysadmin', 'sysadmin', 'sysadmin', 'sysadmin@email.com'),
+(2, 2, 'admin', 'admin', 'admin', 'admin', 'admin@email.com'),
+(3, 3, 'teacher', 'teacher', 'teacher', 'teacher', 'teacher@email.com'),
+(4, 4, 'student', 'student', 'student', 'student', 'student@email.com');
 
 -- --------------------------------------------------------
 
@@ -281,8 +283,3 @@ ALTER TABLE `users`
 ALTER TABLE `users_classes`
   ADD CONSTRAINT `FK_20` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`),
   ADD CONSTRAINT `FK_23` FOREIGN KEY (`id_class`) REFERENCES `classes` (`id_class`);
-COMMIT;
-
-/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
-/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
-/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

@@ -69,7 +69,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <div class="col">
       <h2>Cursuri </h2>
        
-          <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addNewClass">
+          <button type="button" class="btn btn-success my-3 w-100" data-bs-toggle="modal" data-bs-target="#addNewClass">
             Add New Class
           </button> 
 

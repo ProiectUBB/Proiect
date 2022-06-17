@@ -4,7 +4,7 @@ require_once 'functions.php';
 /* If the user is not logged in, it redirects to the index page. */
 if (!userIsLoggedIn()) { header("Location:index.php"); }
 /* Checking if the user is a sysadmin. If not, it redirects to the index page. */
-if ($_SESSION['idRol'] != 1) { header("Location:index.php"); }
+if (!userIsAdmin()) { header("Location:index.php"); }
 
 require_once 'temp-header.php';
 require_once 'temp-sidenav.php';
@@ -149,5 +149,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
   </div>  
 </div>
+
+<!-- Add spacing at bottom of page to make it look better. -->
+<div class="mt-5"></div>
 
 <?php require_once 'temp-footer.php'; ?>

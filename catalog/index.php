@@ -16,4 +16,7 @@
     </div>   
 </div>
 
+<!-- Add spacing at bottom of page to make it look better. -->
+<div class="mt-5"></div>
+
 <?php require_once 'temp-footer.php'; ?>

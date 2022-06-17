@@ -45,4 +45,44 @@ function userIsLoggedIn() {
 
     return false;
 }
+
+function userIsSysAdmin() {
+    session_start();
+    
+    if (isset($_SESSION["valid"]) && isset($_SESSION["idRol"]) && $_SESSION["idRol"] == 1) {
+        return true;
+    }
+
+    return false;
+}
+
+function userIsAdmin() {
+    session_start();
+    
+    if (isset($_SESSION["valid"]) && isset($_SESSION["idRol"]) && $_SESSION["idRol"] <= 2) {
+        return true;
+    }
+
+    return false;
+}
+
+function userIsTeacher() {
+    session_start();
+    
+    if (isset($_SESSION["valid"]) && isset($_SESSION["idRol"]) && $_SESSION["idRol"] <= 3) {
+        return true;
+    }
+
+    return false;
+}
+
+function userIsStudent() {
+    session_start();
+    
+    if (isset($_SESSION["valid"]) && isset($_SESSION["idRol"]) && $_SESSION["idRol"] <= 4) {
+        return true;
+    }
+
+    return false;
+}
 ?>

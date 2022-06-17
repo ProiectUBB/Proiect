@@ -4,7 +4,7 @@ session_start();
 
 if (!userIsLoggedIn()) { header("Location:index.php"); }
 
-if ($_SESSION['idRol'] == 3 || $_SESSION['idRol'] == 4) { header("Location:index.php"); }
+if (!userIsAdmin()) { header("Location:index.php"); }
 
 require_once 'temp-header.php';
 require_once 'temp-sidenav.php';
@@ -202,7 +202,7 @@ function myFunction() {
 					<div class="form-group">
 						<label>Role</label>
 						<select class="form-select" aria-label="Default select example" name="id_role">
-							<option value="2">Admin</option>
+							<?php if (userIsSysAdmin()) { ?><option value="2">Admin</option><?php } ?>
 							<option value="4">Profesor</option>
 							<option value="3" selected>Student</option>
 						</select>
@@ -271,5 +271,8 @@ function myFunction() {
 	</div>
 </div>
 <!-- End of editUserModal -->
+
+<!-- Add spacing at bottom of page to make it look better. -->
+<div class="mt-5"></div> 
 
 <?php require_once 'temp-footer.php'; ?>

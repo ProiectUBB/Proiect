@@ -3,8 +3,8 @@ require_once 'functions.php';
 
 /* If the user is not logged in, it redirects to the index page. */
 if (!userIsLoggedIn()) { header("Location:index.php"); }
-/* Checking if the user is a sysadmin. If not, it redirects to the index page. */
-if ($_SESSION['idRol'] != 1) { header("Location:index.php"); }
+/* Checking if the user is a admin. If not, it redirects to the index page. */
+if (!userIsAdmin()) { header("Location:index.php"); }
 
 require_once 'temp-header.php';
 require_once 'temp-sidenav.php';
@@ -12,7 +12,7 @@ require_once 'temp-dashboard-header.php';
 
 require_once 'config.php';
 
-$classId = $_GET['cid'];
+$classId = sanitizare($_GET['cid']);
 $sql = "SELECT * FROM classes c WHERE id_class = $classId;";
 $result = mysqli_query($conn, $sql);
 
@@ -116,7 +116,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btn_del_student'])) {
         <div class="col">
 
             <div class="accordion" id="accordionExample">
-                <div class="accordion-item text-danger">
+                <div class="accordion-item">
                     <h2 class="accordion-header" id="headingOne">
                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
                             List or Remove Assigned Teachers Or Students Of This Class
@@ -400,5 +400,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btn_del_student'])) {
         </div> <!-- end col -->
     </div> <!-- end row -->    
 </div> <!-- end container -->
+
+<!-- Add spacing at bottom of page to make it look better. -->
+<div class="mt-5"></div>
 
 <?php require_once 'temp-footer.php'; ?>

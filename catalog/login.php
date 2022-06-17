@@ -48,9 +48,9 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
         redirect the user to the index page. If they are not, it will display an error message. */
         if (mysqli_num_rows($result) > 0){
             session_start();
-
+            
             $_SESSION["valid"] = true;
-			$_SESSION['Username'] = $user;
+            $_SESSION['Username'] = $user;
 			$_SESSION['Password'] = $psw;
 			$_SESSION['idRol'] = $idRol;
 
@@ -59,6 +59,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 			echo "Exista o sesiune activa pentru utilizatorul".$_SESSION['Username'];
 
 			while($row = $result->fetch_assoc()) {
+                $_SESSION["id_user"] = $row["id_user"]; 
                 $_SESSION['idRol'] = $row['id_role'];
 
                 header("Location:home.php");
@@ -108,5 +109,8 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
         </div>
     </div>   
 </div>
+
+<!-- Add spacing at bottom of page to make it look better. -->
+<div class="mt-5"></div>
 
 <?php require_once 'temp-footer.php'; ?>

@@ -28,9 +28,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update-seminar-attenda
         $row = mysqli_fetch_assoc($result);
 
         if ($row) {
-            $sql = "UPDATE seminar_attendance SET is_present = $attendance, mentions = '$mentions[$index]', last_updated = now() WHERE id_user = $stud_id AND id_seminar = $seminar_id";
+            $sql = "UPDATE seminar_attendance SET is_present = $attendance, mentions = '$mentions[$index]', last_modified = now() WHERE id_user = $stud_id AND id_seminar = $seminar_id";
         } else {
-            $sql = "INSERT INTO seminar_attendance (`id_seminar`, `id_user`, `date`, `mentions`, `last_updated`, `is_present`) VALUES ($seminar_id, $stud_id, now(), '$mentions[$index]', now(), $attendance)";
+            $sql = "INSERT INTO seminar_attendance (`id_seminar`, `id_user`, `is_present`, `date`, `last_modified`, `mentions`) VALUES ($seminar_id, $stud_id, $attendance, now(), now(), '$mentions[$index]')";
         }
 
         $result = mysqli_query($conn, $sql);

@@ -17,8 +17,15 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `online_catalog`
+-- Database: `sql_catalog`
 --
+
+--
+-- DROP and CREATE database
+--
+DROP DATABASE IF EXISTS `sql_catalog`;
+CREATE DATABASE IF NOT EXISTS `sql_catalog`;
+USE `sql_catalog`;
 
 -- --------------------------------------------------------
 
@@ -56,6 +63,7 @@ CREATE TABLE `laboratory_attendance` (
   `id_user` int(11) NOT NULL,
   `is_present` tinyint(4) NOT NULL,
   `date` datetime NOT NULL,
+  `last_modified` datetime NOT NULL,
   `grade` tinyint(4) DEFAULT NULL,
   `mentions` varchar(256) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
@@ -105,6 +113,7 @@ CREATE TABLE `seminar_attendance` (
   `id_user` int(11) NOT NULL,
   `is_present` tinyint(4) NOT NULL,
   `date` datetime NOT NULL,
+  `last_modified` datetime NOT NULL,
   `mentions` varchar(256) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
@@ -249,37 +258,37 @@ ALTER TABLE `users`
 -- Constraints for table `laboratory`
 --
 ALTER TABLE `laboratory`
-  ADD CONSTRAINT `FK_30` FOREIGN KEY (`id_class`) REFERENCES `classes` (`id_class`);
+  ADD CONSTRAINT `FK_30` FOREIGN KEY (`id_class`) REFERENCES `classes` (`id_class`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `laboratory_attendance`
 --
 ALTER TABLE `laboratory_attendance`
-  ADD CONSTRAINT `FK_36` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`),
-  ADD CONSTRAINT `FK_45` FOREIGN KEY (`id_laboratory`) REFERENCES `laboratory` (`id_laboratory`);
+  ADD CONSTRAINT `FK_36` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_45` FOREIGN KEY (`id_laboratory`) REFERENCES `laboratory` (`id_laboratory`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `seminar`
 --
 ALTER TABLE `seminar`
-  ADD CONSTRAINT `FK_33` FOREIGN KEY (`id_class`) REFERENCES `classes` (`id_class`);
+  ADD CONSTRAINT `FK_33` FOREIGN KEY (`id_class`) REFERENCES `classes` (`id_class`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `seminar_attendance`
 --
 ALTER TABLE `seminar_attendance`
-  ADD CONSTRAINT `FK_39` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`),
-  ADD CONSTRAINT `FK_42` FOREIGN KEY (`id_seminar`) REFERENCES `seminar` (`id_seminar`);
+  ADD CONSTRAINT `FK_39` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_42` FOREIGN KEY (`id_seminar`) REFERENCES `seminar` (`id_seminar`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `users`
 --
 ALTER TABLE `users`
-  ADD CONSTRAINT `FK_27` FOREIGN KEY (`id_role`) REFERENCES `roles` (`id_role`);
+  ADD CONSTRAINT `FK_27` FOREIGN KEY (`id_role`) REFERENCES `roles` (`id_role`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `users_classes`
 --
 ALTER TABLE `users_classes`
-  ADD CONSTRAINT `FK_20` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`),
-  ADD CONSTRAINT `FK_23` FOREIGN KEY (`id_class`) REFERENCES `classes` (`id_class`);
+  ADD CONSTRAINT `FK_20` FOREIGN KEY (`id_user`) REFERENCES `users` (`id_user`) ON DELETE CASCADE,
+  ADD CONSTRAINT `FK_23` FOREIGN KEY (`id_class`) REFERENCES `classes` (`id_class`) ON DELETE CASCADE;

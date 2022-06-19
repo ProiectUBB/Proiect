@@ -2,6 +2,7 @@
 require_once 'temp-header.php';
 require_once 'functions.php';
 
+/* If the user is logged in, it will redirect the user to the index page. */
 if (userIsLoggedIn()) { header("Location: index.php");}
 
 /* Initializing the variables. */
@@ -12,7 +13,8 @@ $eroare=0;
 
 
 if ($_SERVER["REQUEST_METHOD"]=="POST") {
-	$user=sanitizare($_POST["user"]);
+	/* Sanitizing the user input. */
+    $user=sanitizare($_POST["user"]);
 	$psw=sanitizare($_POST["password"]);
 
     require_once 'config.php';
@@ -77,8 +79,8 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
         <?php require_once 'temp-subheader.php'; ?>
 
         <?php require_once 'temp-mainnav.php'; ?>
-    </div>
-</header>
+    </div> <!-- End of container-fluid -->
+</header> <!-- End of header -->
 
 <div class="container-fluid">
     <div class="row p-5 justify-content-center">
@@ -86,29 +88,29 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
             <h4>Login</h4>
 
             <?php if ($userPassErr) { ?>
-            <div class="alert alert-danger" role="alert">
-            <?php echo $userPassErr; ?>
-        </div>
-        <?php } ?>
+                <div class="alert alert-danger" role="alert">
+                    <?php echo $userPassErr; ?>
+                </div>
+            <?php } ?>
 
             <form class="m-1 bg-light p-5" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" target="_self" enctype="multipart/form-data">
                 <div class="input-group input-container">
                     <span class="input-group-text" id="basic-addon1"><i class="fa fa-user"></i></span>
                     <input type="text" class="form-control input-field" name="user" placeholder="Username" value="<?php echo $user; ?>">
                     <span class="error">* <?php echo $usererr;?></span>
-                </div>
+                </div> <!-- End of input-group -->
 
                 <div class="input-group input-container">
                     <span class="input-group-text" id="basic-addon1"><i class="fa fa-key"></i></span>
                     <input type="password" class="form-control input-field" name="password" placeholder="Password" value="<?php echo $psw; ?>">
                     <span class="error">* <?php echo $pswerr;?></span>
-                </div>
+                </div> <!-- End of input-group -->
 
                 <button type="submit" class="btn btn-lg btn-success">Login</button>
-            </form>
-        </div>
-    </div>   
-</div>
+            </form> <!-- End of form -->
+        </div> <!-- End of col-4 -->
+    </div> <!-- End of row -->
+</div> <!-- End of container-fluid -->
 
 <!-- Add spacing at bottom of page to make it look better. -->
 <div class="mt-5"></div>

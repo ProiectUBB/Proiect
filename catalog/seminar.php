@@ -27,18 +27,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update-seminar-attenda
         $result = mysqli_query($conn, $sql);
         $row = mysqli_fetch_assoc($result);
 
+
+        /* Checking if the student is present/absent/exempted and add status in table update or insert new row.
+        Change table row color based on the student status. */
         if ($row) {
             $sql = "UPDATE seminar_attendance SET is_present = $attendance, mentions = '$mentions[$index]', last_modified = now() WHERE id_user = $stud_id AND id_seminar = $seminar_id";
         } else {
             $sql = "INSERT INTO seminar_attendance (`id_seminar`, `id_user`, `is_present`, `date`, `last_modified`, `mentions`) VALUES ($seminar_id, $stud_id, $attendance, now(), now(), '$mentions[$index]')";
         }
 
+        /* Executing the query. */
         $result = mysqli_query($conn, $sql);
 
         /* Used to keep track of the index of the array. */
         $index++;
     }
 
+    /* Redirecting the user to the previous page. */
     header("Location: " . $_SERVER['HTTP_REFERER']);
 }
 
@@ -51,9 +56,6 @@ $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
 /* Getting the class id based on the seminar id. */
 $cid = $row['id_class'];
-
-
-
 ?>
 
 <div class="container">
@@ -69,17 +71,10 @@ $cid = $row['id_class'];
                 <strong>View Attendances/Grades</strong>
             </div>
 
-
             <?php } ?>
 
             <!-- This section is what Teacher and Admins sees -->
             <?php if (userIsTeacher()) { ?>
-
-            <!-- This alert is for orientation purposes only. It will be removed in the future. -->
-            <div class="alert alert-secondary" role="alert">
-                <strong>Add Attendances/Grades</strong>
-            </div>
-
 
             <form class="row g-3" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
                 <table class="table table-hover">
@@ -154,14 +149,14 @@ $cid = $row['id_class'];
                                 </div>
                             </td>
                         </tr>
-                        <?php } ?>
+                        <?php } // while close ?>
                     </tbody>
                 </table>
 
                 <input type="hidden" name="seminar_id" value="<?php echo $sid ?>">
                 <button type="submit" class="btn btn-lg btn-primary" name="update-seminar-attendance">Update Student Attendance</button>
             </form>
-        <?php } // end teacher check if ?>
+        <?php } // userIsTeacher close ?>
         </div> <!-- end col -->
     </div> <!-- end row -->
 </div>  <!-- end container -->

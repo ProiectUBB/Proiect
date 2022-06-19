@@ -12,6 +12,8 @@ require_once 'temp-dashboard-header.php';
 
 require_once 'config.php';
 
+/* Checking if the button `btn_add_sem_lab` is pressed. If it is, it will get the value of the
+`cours_id` and assign it to the variable ``. */
 if(isset($_POST['btn_add_sem_lab'])) {
     $class_id = sanitizare($_POST['cours_id']);
 }
@@ -24,6 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
 
     $success_counter = 0;
 
+    /* Inserting the values from the form into the database. */
     for ($index = 0; $index < count($sub_class_names); $index++) {
         $sql = "INSERT INTO $sub_class_type (id_class, ".$sub_class_type."_name, ".$sub_class_type."_date) VALUES ($class_id, '$sub_class_names[$index]', '$sub_class_dates[$index]')";
 
@@ -34,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
         }
     }
 
+    /* Checking if the number of items added is equal to the number of items in the array. If it is, it will display a success message. */
     if ($success_counter == count($sub_class_names)) {
         $success = "Successfully added " . $success_counter . " item/s";
     }
@@ -46,9 +50,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
             <h1>Add new Laboratory or Seminar to Class</h1>
 
             <?php if ($success) { ?>
-        	<div class="alert alert-success" role="alert">
-                <?php echo $success; ?>
-            </div>
+                <div class="alert alert-success" role="alert">
+                    <?php echo $success; ?>
+                </div>
             <?php } ?>
 
             <form method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" >
@@ -90,8 +94,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
                         <button id="submit" type="submit" name="submit" class="btn btn-success w-100">Add Items</button>
                     </div>
                 
-                </div>
-            </form>
+                </div> <!-- end of row -->
+            </form> <!-- end of form -->
         </div> <!-- end col -->
     </div> <!-- end row -->    
 </div> <!-- end container -->

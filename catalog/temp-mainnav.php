@@ -19,10 +19,7 @@ require_once 'functions.php';
                 <?php } else { ?>
                     <li class="nav-item">
                         <a class="nav-link" href="login.php"><i class="fa fa-fw fa-user"></i> Login</a>
-                    </li> 
-                    <li class="nav-item">
-                        <a class="nav-link" href="inregistrare.php"><i class="fa fa-fw fa-user"></i> Register</a>
-                    </li> 
+                    </li>
                 <?php } ?>
                 <li class="nav-item">
                     <a class="nav-link" href="http://www.cs.ubbcluj.ro/invatamant/programe-postuniversitare/pregatire-si-formare-profesionala-in-informatica/structura-anului-academic/"><i class="fa fa-fw fa-calendar"></i>Structura anului academic</a>

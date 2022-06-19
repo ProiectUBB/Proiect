@@ -41,6 +41,3 @@
 </head>
 
 <body id="page-top">
-<?php 
-session_start(); 
-?>

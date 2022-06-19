@@ -38,8 +38,6 @@ function getData($method,$key) {
  * @return A boolean value.
  */
 function userIsLoggedIn() {
-
-
     if (isset($_SESSION["valid"]) && isset($_SESSION["Username"])) {
         return true;
     }
@@ -47,9 +45,10 @@ function userIsLoggedIn() {
     return false;
 }
 
+/**
+ * If the user is logged in and the user's role is 1, then the user is a system administrator.
+ */
 function userIsSysAdmin() {
-
-
     if (isset($_SESSION["valid"]) && isset($_SESSION["idRol"]) && $_SESSION["idRol"] == 1) {
         return true;
     }
@@ -57,9 +56,12 @@ function userIsSysAdmin() {
     return false;
 }
 
+/**
+ * If the user is logged in and has a role of 2 or less, then they are an admin.
+ * 
+ * @return A boolean value.
+ */
 function userIsAdmin() {
-
-
     if (isset($_SESSION["valid"]) && isset($_SESSION["idRol"]) && $_SESSION["idRol"] <= 2) {
         return true;
     }
@@ -67,9 +69,12 @@ function userIsAdmin() {
     return false;
 }
 
+/**
+ * If the user is logged in and has a role of 3 or less, then they are a teacher.
+ * 
+ * @return A boolean value.
+ */
 function userIsTeacher() {
-
-
     if (isset($_SESSION["valid"]) && isset($_SESSION["idRol"]) && $_SESSION["idRol"] <= 3) {
         return true;
     }
@@ -77,9 +82,12 @@ function userIsTeacher() {
     return false;
 }
 
+/**
+ * If the user is logged in and has a role of 4 or less, then the user is a student.
+ * 
+ * @return A boolean value.
+ */
 function userIsStudent() {
-
-
     if (isset($_SESSION["valid"]) && isset($_SESSION["idRol"]) && $_SESSION["idRol"] <= 4) {
         return true;
     }

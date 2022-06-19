@@ -25,6 +25,7 @@ if(isset($_POST['submit'])) {
 } else {
     /* Checking if the user is not the sysadmin, if it is not, it will delete the user. */
     $userId = $_GET['idUser'];
+    
     if ($userId != 1) {
         if (isset($userId) && !empty($userId)) {
             $sql = "DELETE FROM users WHERE id_user = $userId";

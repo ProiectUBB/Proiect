@@ -6,4 +6,4 @@
     <div class="col text-end me-5">
         <img src="/catalog/images/ubb.jpg" style="border-radius: 50%;" >
     </div>
-</div>
+</div> <!-- end row -->

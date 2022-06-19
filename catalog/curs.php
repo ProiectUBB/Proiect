@@ -12,23 +12,30 @@ require_once 'temp-dashboard-header.php';
 
 require_once 'config.php';
 
+/* Sanitizing the input from the user. */
 $classId = sanitizare($_GET['cid']);
+
+/* Selecting all the data from the classes table where the id_class is equal to the classId variable. */
 $sql = "SELECT * FROM classes c WHERE id_class = $classId;";
 $result = mysqli_query($conn, $sql);
 
 
+/* The above code is checking if the user has clicked the button "Assign Teacher" and if the user has
+checked any of the checkboxes. If the user has checked any of the checkboxes, the code will take the
+array of the checkboxes and turn it into a string. Then, the code will insert the string into the
+database. If the user has not checked any of the checkboxes, the code will redirect the user to the
+previous page. */
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btn_assign_teacher'])) {
-
     if(isset($_POST['chk_add_utid']) && !empty($_POST['chk_add_utid'])) {
         $cours_id = $_POST['cours_id'];
 
         /* Taking the array of the checkboxes and turning it into a string. */
-
         foreach ($_POST['chk_add_utid'] as $utid) {
             $sql = "INSERT INTO users_classes VALUES ($utid, $cours_id);";
             $result = mysqli_query($conn,$sql);
         }
 
+        /* Redirecting the user to the previous page. */
         if ($result) {
             header("Location: " . $_SERVER['HTTP_REFERER']);
         } else {
@@ -39,6 +46,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btn_assign_teacher']))
     }
 }
 
+/* The above code is checking if the form has been submitted and if the checkbox has been checked. If
+the checkbox has been checked, it will insert the user id and course id into the users_classes
+table. */
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btn_assign_student'])) {
     if(isset($_POST['chk_add_usid']) && !empty($_POST['chk_add_usid'])) {
         $cours_id = $_POST['cours_id'];
@@ -58,6 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btn_assign_student']))
     }
 }
 
+/* Deleting the teacher from the class. */
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btn_del_teacher'])) {
     if(isset($_POST['chk_del_utid']) && !empty($_POST['chk_del_utid'])) {
         $cours_id = $_POST['cours_id'];
@@ -78,6 +89,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btn_del_teacher'])) {
 }       
 
 
+/* Deleting the selected students from the class. */
 if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btn_del_student'])) {
     if(isset($_POST['chk_del_usid']) && !empty($_POST['chk_del_usid'])) {
         $cours_id = $_POST['cours_id'];
@@ -96,25 +108,21 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btn_del_student'])) {
         header("Location: " . $_SERVER['HTTP_REFERER']);
     }
 }
-
 ?>
-
-
 
 <div class="container">
     <div class="row">
         <div class="col">
             <?php while ($row = mysqli_fetch_row($result)) { ?>
-            <h2>Curs: <?php echo $row[1]; ?></h2>
-            <hr>
-            <p><?php echo $row[2]; ?></p>
-            <?php } ?>
+                <h2>Curs: <?php echo $row[1]; ?></h2>
+                <hr>
+                <p><?php echo $row[2]; ?></p>
+            <?php } // end while ?>
         </div> <!-- end col -->
     </div> <!-- end row -->  
 
     <div class="row">
         <div class="col">
-
             <div class="accordion" id="accordionExample">
                 <div class="accordion-item">
                     <h2 class="accordion-header" id="headingOne">
@@ -125,14 +133,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btn_del_student'])) {
 
                     <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
                         <div class="accordion-body"> 
-
                             <nav>
                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                     <button class="nav-link active" id="nav-list-teacher-tab" data-bs-toggle="tab" data-bs-target="#nav-list-teacher" type="button" role="tab" aria-controls="nav-list-teacher" aria-selected="true">List Teachers</button>
 
                                     <button class="nav-link" id="nav-list-student-tab" data-bs-toggle="tab" data-bs-target="#nav-list-student" type="button" role="tab" aria-controls="nav-list-student" aria-selected="false">List Students</button>    
                                 </div>
-                            </nav>
+                            </nav> <!-- end nav -->
 
                             <div class="tab-content" id="nav-tabContent">
                                 <!-- List teachers -->
@@ -141,65 +148,68 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btn_del_student'])) {
                                         <table class="table">
                                             <thead>
                                                 <tr>
-                                                <th scope="col"></th>
-                                                <th scope="col">First Name</th>
-                                                <th scope="col">Last Name</th>
-                                                <th scope="col">Email</th>
-                                            </tr>
-                                        </thead>
+                                                    <th scope="col"></th>
+                                                    <th scope="col">First Name</th>
+                                                    <th scope="col">Last Name</th>
+                                                    <th scope="col">Email</th>
+                                                </tr>
+                                            </thead>
 
-                                        <tbody>
-                                            <?php $sql_list_teachers = "SELECT u.id_user, u.first_name, u.last_name, u.email FROM users_classes uc JOIN users u ON uc.id_user = u.id_user WHERE u.id_role = 3 AND uc.id_class = $classId;";
+                                            <tbody>
+                                                <?php 
+                                                $sql_list_teachers = "SELECT u.id_user, u.first_name, u.last_name, u.email FROM users_classes uc JOIN users u ON uc.id_user = u.id_user WHERE u.id_role = 3 AND uc.id_class = $classId;";
                                                 $result_list_teachers = mysqli_query($conn, $sql_list_teachers);
-                                                
+                                                    
                                                 while ($row_list_teachers = mysqli_fetch_row($result_list_teachers)) { ?>
-                                            <tr>
-                                                <td><input name="chk_del_utid[]" type="checkbox" class="chkbox" value="<?php echo $row_list_teachers[0]; ?>"/></td>
-                                                <td><?php echo $row_list_teachers[1]; ?></td>
-                                                <td><?php echo $row_list_teachers[2]; ?></td>
-                                                <td><?php echo $row_list_teachers[3]; ?></td>
-                                            </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
+                                                    <tr>
+                                                        <td><input name="chk_del_utid[]" type="checkbox" class="chkbox" value="<?php echo $row_list_teachers[0]; ?>"/></td>
+                                                        <td><?php echo $row_list_teachers[1]; ?></td>
+                                                        <td><?php echo $row_list_teachers[2]; ?></td>
+                                                        <td><?php echo $row_list_teachers[3]; ?></td>
+                                                    </tr>
+                                                <?php } // End while loop ?>
+                                            </tbody>
+                                        </table>
 
-                                    <input type='hidden' name='cours_id' value='<?php echo $classId; ?>'/> 
-                                    <button type="submit" name="btn_del_teacher" class="btn btn-danger m-3 w-100">Unassign teacher/s</button>
-                                </form>
-                            </div> <!-- end List assigned teachers -->
+                                        <input type='hidden' name='cours_id' value='<?php echo $classId; ?>'/> 
+                                        <button type="submit" name="btn_del_teacher" class="btn btn-danger m-3 w-100">Unassign teacher/s</button>
+                                    </form> <!-- end form -->
+                                </div> <!-- end List assigned teachers -->
 
-                            <!-- List Students -->
-                            <div class="tab-pane fade bg-light" id="nav-list-student" role="tabpanel" aria-labelledby="nav-list-student-tab">
-                                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post">
-                                    <table class="table">
-                                        <thead>
-                                            <tr>
-                                                <th scope="col"></th>
-                                                <th scope="col">First Name</th>
-                                                <th scope="col">Last Name</th>
-                                                <th scope="col">Email</th>
-                                            </tr>
-                                        </thead>
+                                <!-- List Students -->
+                                <div class="tab-pane fade bg-light" id="nav-list-student" role="tabpanel" aria-labelledby="nav-list-student-tab">
+                                    <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post">
+                                        <table class="table">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col"></th>
+                                                    <th scope="col">First Name</th>
+                                                    <th scope="col">Last Name</th>
+                                                    <th scope="col">Email</th>
+                                                </tr>
+                                            </thead>
 
-                                        <tbody>
-                                            <?php $sql_list_students = "SELECT u.id_user, u.first_name, u.last_name, u.email FROM users_classes uc JOIN users u ON uc.id_user = u.id_user WHERE u.id_role = 4 AND uc.id_class = $classId;";
+                                            <tbody>
+                                                <?php 
+                                                $sql_list_students = "SELECT u.id_user, u.first_name, u.last_name, u.email FROM users_classes uc JOIN users u ON uc.id_user = u.id_user WHERE u.id_role = 4 AND uc.id_class = $classId;";
                                                 $result_list_students = mysqli_query($conn, $sql_list_students);
 
                                                 while ($row_list_students = mysqli_fetch_row($result_list_students)) { ?>
-                                            <tr>
-                                                <td><input name="chk_del_usid[]" type="checkbox" class="chkbox" value="<?php echo $row_list_students[0]; ?>"/></td>
-                                                <td><?php echo $row_list_students[1]; ?></td>
-                                                <td><?php echo $row_list_students[2]; ?></td>
-                                                <td><?php echo $row_list_students[3]; ?></td>
-                                            </tr>
-                                            <?php } ?>
-                                        </tbody>
-                                    </table>
+                                                    <tr>
+                                                        <td><input name="chk_del_usid[]" type="checkbox" class="chkbox" value="<?php echo $row_list_students[0]; ?>"/></td>
+                                                        <td><?php echo $row_list_students[1]; ?></td>
+                                                        <td><?php echo $row_list_students[2]; ?></td>
+                                                        <td><?php echo $row_list_students[3]; ?></td>
+                                                    </tr>
+                                                <?php } // End while loop ?>
+                                            </tbody>
+                                        </table>
 
-                                    <input type='hidden' name='cours_id' value='<?php echo $classId; ?>'/> 
-                                    <button type="submit" name="btn_del_student" class="btn btn-danger m-3 w-100">Unassign student/s</button>
-                                </form>
-                            </div> <!-- end List assigned Students -->
+                                        <input type='hidden' name='cours_id' value='<?php echo $classId; ?>'/> 
+                                        <button type="submit" name="btn_del_student" class="btn btn-danger m-3 w-100">Unassign student/s</button>
+                                    </form> <!-- end form -->
+                                </div> <!-- end List assigned Students -->
+                            </div> <!-- end tab-content -->
                         </div> <!-- end accordion-body -->
                     </div> <!-- end collapseOne -->
                 </div> <!-- end accordion-item -->
@@ -213,14 +223,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btn_del_student'])) {
 
                     <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-
                             <nav>
                                 <div class="nav nav-tabs" id="nav-tab" role="tablist">
                                     <button class="nav-link active" id="nav-manage-teacher-tab" data-bs-toggle="tab" data-bs-target="#nav-manage-teacher" type="button" role="tab" aria-controls="nav-manage-teacher" aria-selected="true">Manage Teachers</button>
 
                                     <button class="nav-link" id="nav-manage-student-tab" data-bs-toggle="tab" data-bs-target="#nav-manage-student" type="button" role="tab" aria-controls="nav-manage-student" aria-selected="false">Manage Students</button>    
                                 </div>
-                            </nav>
+                            </nav> <!-- end nav -->
 
                             <div class="tab-content" id="nav-tabContent">
                                 <!-- Assign Teachers to Course -->
@@ -237,17 +246,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btn_del_student'])) {
                                             </thead>
 
                                             <tbody>
-                                                <?php $sql_list_teachers = "SELECT u.id_user, u.first_name, u.last_name, u.email FROM users u JOIN roles r ON u.id_role = r.id_role WHERE r.role_name = 'teacher' AND u.id_user NOT IN (SELECT uc.id_user from users_classes uc WHERE uc.id_class = $classId);";
-                                                    $result_list_teachers = mysqli_query($conn, $sql_list_teachers);
+                                                <?php 
+                                                $sql_list_teachers = "SELECT u.id_user, u.first_name, u.last_name, u.email FROM users u JOIN roles r ON u.id_role = r.id_role WHERE r.role_name = 'teacher' AND u.id_user NOT IN (SELECT uc.id_user from users_classes uc WHERE uc.id_class = $classId);";
+                                                $result_list_teachers = mysqli_query($conn, $sql_list_teachers);
 
-                                                    while ($row_list_teachers = mysqli_fetch_row($result_list_teachers)) { ?>
-                                                <tr>
-                                                    <td><input name="chk_add_utid[]" type="checkbox" class="chkbox" value="<?php echo $row_list_teachers[0]; ?>"/></td>
-                                                    <td><?php echo $row_list_teachers[1]; ?></td>
-                                                    <td><?php echo $row_list_teachers[2]; ?></td>
-                                                    <td><?php echo $row_list_teachers[3]; ?></td>
-                                                </tr>
-                                                <?php } ?>
+                                                while ($row_list_teachers = mysqli_fetch_row($result_list_teachers)) { ?>
+                                                    <tr>
+                                                        <td><input name="chk_add_utid[]" type="checkbox" class="chkbox" value="<?php echo $row_list_teachers[0]; ?>"/></td>
+                                                        <td><?php echo $row_list_teachers[1]; ?></td>
+                                                        <td><?php echo $row_list_teachers[2]; ?></td>
+                                                        <td><?php echo $row_list_teachers[3]; ?></td>
+                                                    </tr>
+                                                <?php } // End While ?>
                                             </tbody>
                                         </table>
 
@@ -270,16 +280,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btn_del_student'])) {
                                             </thead>
 
                                             <tbody>
-                                                <?php $sql_list_students = "SELECT u.id_user, u.first_name, u.last_name, u.email FROM users u JOIN roles r ON u.id_role = r.id_role WHERE r.role_name = 'student' AND u.id_user NOT IN (SELECT uc.id_user from users_classes uc WHERE uc.id_class = $classId);";
-                                                    $result_list_students = mysqli_query($conn, $sql_list_students);
+                                                <?php 
+                                                $sql_list_students = "SELECT u.id_user, u.first_name, u.last_name, u.email FROM users u JOIN roles r ON u.id_role = r.id_role WHERE r.role_name = 'student' AND u.id_user NOT IN (SELECT uc.id_user from users_classes uc WHERE uc.id_class = $classId);";
+                                                $result_list_students = mysqli_query($conn, $sql_list_students);
 
-                                                    while ($row_list_students = mysqli_fetch_row($result_list_students)) { ?>
-                                                <tr>
-                                                    <td><input name="chk_add_usid[]" type="checkbox" class="chkbox" value="<?php echo $row_list_students[0]; ?>"/></td>
-                                                    <td><?php echo $row_list_students[1]; ?></td>
-                                                    <td><?php echo $row_list_students[2]; ?></td>
-                                                    <td><?php echo $row_list_students[3]; ?></td>
-                                                </tr>
+                                                while ($row_list_students = mysqli_fetch_row($result_list_students)) { ?>
+                                                    <tr>
+                                                        <td><input name="chk_add_usid[]" type="checkbox" class="chkbox" value="<?php echo $row_list_students[0]; ?>"/></td>
+                                                        <td><?php echo $row_list_students[1]; ?></td>
+                                                        <td><?php echo $row_list_students[2]; ?></td>
+                                                        <td><?php echo $row_list_students[3]; ?></td>
+                                                    </tr>
                                                 <?php } ?>
                                             </tbody>
                                         </table>
@@ -302,7 +313,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btn_del_student'])) {
 
                     <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree" data-bs-parent="#accordionExample">
                         <div class="accordion-body">
-
                             <form action="manageClassAdd.php" method="post">    
                                 <input type='hidden' name='cours_id' value='<?php echo $classId; ?>'/>
                                 <button type="submit" name="btn_add_sem_lab" class="btn btn-success m-3 w-100">Add New Seminar or Laboratory</button>
@@ -331,21 +341,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btn_del_student'])) {
                                             </thead>
 
                                             <tbody>
-                                                <?php $sql_list_seminars = "SELECT s.id_class, s.seminar_name, s.seminar_date, s.id_seminar FROM seminar s WHERE s.id_class = $classId ORDER BY s.seminar_date ASC;";
-                                                    $result_list_seminars = mysqli_query($conn, $sql_list_seminars);
+                                                <?php
+                                                $sql_list_seminars = "SELECT s.id_class, s.seminar_name, s.seminar_date, s.id_seminar FROM seminar s WHERE s.id_class = $classId ORDER BY s.seminar_date ASC;";
+                                                $result_list_seminars = mysqli_query($conn, $sql_list_seminars);
 
-                                                    while ($row_list_seminars = mysqli_fetch_row($result_list_seminars)) { ?>
-                                                <tr>
-                                                    <td>-</td>
-                                                    <td><?php echo $row_list_seminars[1]; ?></td>
-                                                    <td><?php echo $row_list_seminars[2]; ?></td>
-                                                    <td>
-                                                        <a href="manageClassDelete.php?idSubClass=<?php echo $row_list_seminars[3] ?>&type=sem" class="delete" >
-                                                            <i class="material-icons" title="Delete">&#xE872;</i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <?php } ?>
+                                                while ($row_list_seminars = mysqli_fetch_row($result_list_seminars)) { ?>
+                                                    <tr>
+                                                        <td>-</td>
+                                                        <td><?php echo $row_list_seminars[1]; ?></td>
+                                                        <td><?php echo $row_list_seminars[2]; ?></td>
+                                                        <td>
+                                                            <a href="manageClassDelete.php?idSubClass=<?php echo $row_list_seminars[3] ?>&type=sem" class="delete" >
+                                                                <i class="material-icons" title="Delete">&#xE872;</i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                <?php } // End while loop ?>
                                             </tbody>
                                         </table>
 
@@ -368,21 +379,22 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btn_del_student'])) {
                                             </thead>
 
                                             <tbody>
-                                                <?php $sql_list_laboratories = "SELECT l.id_class, l.laboratory_name, l.laboratory_date, l.id_laboratory FROM laboratory l WHERE l.id_class = $classId ORDER BY l.laboratory_date ASC;";
-                                                    $result_list_laboratories = mysqli_query($conn, $sql_list_laboratories);
+                                                <?php 
+                                                $sql_list_laboratories = "SELECT l.id_class, l.laboratory_name, l.laboratory_date, l.id_laboratory FROM laboratory l WHERE l.id_class = $classId ORDER BY l.laboratory_date ASC;";
+                                                $result_list_laboratories = mysqli_query($conn, $sql_list_laboratories);
 
-                                                    while ($row_list_laboratories = mysqli_fetch_row($result_list_laboratories)) { ?>
-                                                <tr>
-                                                    <td>-</td>
-                                                    <td><?php echo $row_list_laboratories[1]; ?></td>
-                                                    <td><?php echo $row_list_laboratories[2]; ?></td>
-                                                    <td>
-                                                        <a href="manageClassDelete.php?idSubClass=<?php echo $row_list_laboratories[3] ?>&type=lab" class="delete" >
-                                                            <i class="material-icons" title="Delete">&#xE872;</i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <?php } ?>
+                                                while ($row_list_laboratories = mysqli_fetch_row($result_list_laboratories)) { ?>
+                                                    <tr>
+                                                        <td>-</td>
+                                                        <td><?php echo $row_list_laboratories[1]; ?></td>
+                                                        <td><?php echo $row_list_laboratories[2]; ?></td>
+                                                        <td>
+                                                            <a href="manageClassDelete.php?idSubClass=<?php echo $row_list_laboratories[3] ?>&type=lab" class="delete" >
+                                                                <i class="material-icons" title="Delete">&#xE872;</i>
+                                                            </a>
+                                                        </td>
+                                                    </tr>
+                                                <?php } // End while loop ?>
                                             </tbody>
                                         </table>
 
@@ -390,7 +402,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['btn_del_student'])) {
                                         <!-- <button type="submit" name="btn_assign_teacher" class="btn btn-success m-3 w-100">Assign teacher/s</button> -->
                                     </form>
                                 </div> <!-- end Manage laboratories -->
-                                
                             </div> <!-- end tab-content -->
                         </div> <!-- end accordion-body -->
                     </div> <!-- end collapseThree -->

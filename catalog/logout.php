@@ -3,5 +3,6 @@
 session_start();
 session_destroy();
 
+/* Redirecting the user to the index page. */
 header("Location:index.php");
 ?>

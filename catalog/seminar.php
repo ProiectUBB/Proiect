@@ -1,6 +1,5 @@
 <?php
 require_once 'functions.php';
-session_start();
 
 /* If the user is not logged in, it redirects to the index page. */
 if (!userIsLoggedIn()) { header("Location:index.php"); }
@@ -21,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update-seminar-attenda
     foreach ($_POST['attendance'] as $key => $value) {
         $current_user = $_SESSION['user_id'];
         $stud_id = $key;
-        $attendance = $value;   
+        $attendance = $value;
         $mentions = $_POST['mentions'];
 
         $sql = "SELECT * FROM seminar_attendance WHERE id_user = $stud_id AND id_seminar = $seminar_id";
@@ -60,9 +59,9 @@ $cid = $row['id_class'];
 <div class="container">
     <div class="row">
         <div class="col">
-            <h2>Seminar</h2>       
-            <h4><?php echo $row['seminar_name'] ?></h4>    
-            <p><?php echo $row['seminar_date'] ?></p>    
+            <h2>Seminar</h2>
+            <h4><?php echo $row['seminar_name'] ?></h4>
+            <p><?php echo $row['seminar_date'] ?></p>
             <!-- This section is what the users sees -->
             <?php if (userIsStudent()) { ?>
             <!-- This alert is for orientation purposes only. It will be removed in the future. -->
@@ -75,11 +74,11 @@ $cid = $row['id_class'];
 
             <!-- This section is what Teacher and Admins sees -->
             <?php if (userIsTeacher()) { ?>
-        
+
             <!-- This alert is for orientation purposes only. It will be removed in the future. -->
             <div class="alert alert-secondary" role="alert">
                 <strong>Add Attendances/Grades</strong>
-            </div> 
+            </div>
 
 
             <form class="row g-3" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
@@ -95,17 +94,17 @@ $cid = $row['id_class'];
                         </tr>
                     </thead>
                     <tbody>
-                <?php 
+                <?php
                     /* Getting the students from the database and displaying them in a table. */
                     $sql = "SELECT uc.id_user, CONCAT(u.first_name, ' ', u.last_name) as full_name, u.email FROM users_classes uc JOIN users u ON u.id_user = uc.id_user WHERE uc.id_class = $cid AND u.id_role = 4";
                     $result = mysqli_query($conn, $sql);
                     $students = mysqli_fetch_all($result, MYSQLI_ASSOC);
-                    
+
                     /* Getting the students from the database and displaying them in a table. */
                     while ($student = array_shift($students)) {
                         /* Getting the id of the student. */
                         $student_id = $student['id_user'];
-                        
+
                         /* Getting the attendance of the student. */
                         $sql_get_attendence = "SELECT sa.id_user, sa.is_present, sa.mentions FROM seminar_attendance sa WHERE id_user = $student_id AND id_seminar = $sid";
                         $result_attendace = mysqli_query($conn, $sql_get_attendence);
@@ -158,7 +157,7 @@ $cid = $row['id_class'];
                         <?php } ?>
                     </tbody>
                 </table>
-                
+
                 <input type="hidden" name="seminar_id" value="<?php echo $sid ?>">
                 <button type="submit" class="btn btn-lg btn-primary" name="update-seminar-attendance">Update Student Attendance</button>
             </form>
@@ -168,6 +167,6 @@ $cid = $row['id_class'];
 </div>  <!-- end container -->
 
 <!-- Add spacing at bottom of page to make it look better. -->
-<div class="mt-5"></div> 
+<div class="mt-5"></div>
 
 <?php require_once 'temp-footer.php'; ?>

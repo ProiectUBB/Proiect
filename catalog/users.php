@@ -1,6 +1,6 @@
 <?php
 require_once 'functions.php';
-session_start();
+
 
 if (!userIsLoggedIn()) { header("Location:index.php"); }
 
@@ -76,7 +76,7 @@ function myFunction() {
 					<div class="row">
 						<div class="col-sm-6">
 							<h2>Manage <b>Users</b></h2>
-						</div> 
+						</div>
 
 						<div class="col-sm-6">
 							<a href="#addUserModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New User</span></a>
@@ -98,7 +98,7 @@ function myFunction() {
 										<div class="modal-body">
 											<p>Are you sure you want to delete the selected users?</p>
 											<p class="text-danger">
-												<b>Note:</b> 
+												<b>Note:</b>
 												<span>This action cannot be undone.</span>
 											</p>
 										</div>
@@ -108,7 +108,7 @@ function myFunction() {
 											<button type="submit" name="submit" class="btn btn-danger">Delete</button>
 										</div>
 									</div>
-								</div> 
+								</div>
 							</div> <!-- End of Modal -->
 
 							<input type="text" id="myInput" onkeyup="myFunction()" placeholder="Search for Username..">
@@ -128,7 +128,7 @@ function myFunction() {
 							<th>Operations</th>
 						</tr>
 					</thead>
-					
+
 					<tbody>
 					<?php
 						if ($result->num_rows > 0) {
@@ -146,7 +146,7 @@ function myFunction() {
 									<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
 									<a href="editUser.php?idUser=<?php echo $row['id_user'] ?>" class="edit" ></a>
 								</a>
-								
+
 								<a href="deleteUser.php?idUser=<?php echo $row['id_user'] ?>" class="delete" >
 									<i class="material-icons" title="Delete">&#xE872;</i>
 								</a>
@@ -228,7 +228,7 @@ function myFunction() {
 			</div> <!-- End of modal-content -->
 		</div> <!-- End of modal-dialog -->
 	</form> <!-- End of form -->
-</div> 
+</div>
 <!-- End of addUserModal -->
 
 <!-- Edit Modal HTML -->
@@ -273,6 +273,6 @@ function myFunction() {
 <!-- End of editUserModal -->
 
 <!-- Add spacing at bottom of page to make it look better. -->
-<div class="mt-5"></div> 
+<div class="mt-5"></div>
 
 <?php require_once 'temp-footer.php'; ?>

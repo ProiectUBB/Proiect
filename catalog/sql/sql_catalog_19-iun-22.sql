@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Gazdă: localhost
--- Timp de generare: iun. 14, 2022 la 02:42 PM
+-- Timp de generare: iun. 19, 2022 la 02:22 AM
 -- Versiune server: 10.4.22-MariaDB
 -- Versiune PHP: 8.0.13
 
@@ -73,7 +73,9 @@ CREATE TABLE `laboratory` (
 --
 
 INSERT INTO `laboratory` (`id_laboratory`, `id_class`, `laboratory_name`, `laboratory_date`) VALUES
-(3, 23, 'hhhhhhhhhhhhhhhhhhh', '2022-06-03 00:00:00');
+(3, 23, 'hhhhhhhhhhhhhhhhhhh', '2022-06-03 00:00:00'),
+(4, 18, 'qqq', '2022-06-04 00:00:00'),
+(5, 18, 'qqq2', '2022-06-11 00:00:00');
 
 -- --------------------------------------------------------
 
@@ -144,10 +146,27 @@ INSERT INTO `seminar` (`id_seminar`, `id_class`, `seminar_name`, `seminar_date`)
 CREATE TABLE `seminar_attendance` (
   `id_seminar` int(11) NOT NULL,
   `id_user` int(11) NOT NULL,
-  `is_present` tinyint(4) NOT NULL,
   `date` datetime NOT NULL,
-  `mentions` varchar(256) DEFAULT NULL
+  `mentions` varchar(256) DEFAULT NULL,
+  `last_updated` datetime DEFAULT NULL,
+  `is_present` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Eliminarea datelor din tabel `seminar_attendance`
+--
+
+INSERT INTO `seminar_attendance` (`id_seminar`, `id_user`, `date`, `mentions`, `last_updated`, `is_present`) VALUES
+(6, 4, '2022-06-19 02:51:04', '', '2022-06-19 03:17:01', 1),
+(6, 21, '2022-06-19 02:51:58', '', '2022-06-19 03:17:01', 1),
+(6, 22, '2022-06-19 03:05:29', '', '2022-06-19 03:17:01', 1),
+(6, 23, '2022-06-19 02:52:26', '', '2022-06-19 03:17:01', 2),
+(6, 24, '2022-06-19 03:05:29', '', '2022-06-19 03:17:01', 0),
+(7, 4, '2022-06-19 03:08:48', '', '2022-06-19 03:08:48', 1),
+(7, 21, '2022-06-19 03:08:48', '', '2022-06-19 03:08:48', 0),
+(7, 22, '2022-06-19 03:08:48', '', '2022-06-19 03:08:48', 1),
+(7, 23, '2022-06-19 03:08:48', '', '2022-06-19 03:08:48', 1),
+(7, 24, '2022-06-19 03:08:48', '', '2022-06-19 03:08:48', 2);
 
 -- --------------------------------------------------------
 
@@ -265,10 +284,17 @@ CREATE TABLE `users_classes` (
 
 INSERT INTO `users_classes` (`id_user`, `id_class`) VALUES
 (3, 5),
+(3, 18),
+(3, 23),
 (4, 20),
+(4, 23),
 (21, 20),
+(21, 23),
 (22, 20),
+(22, 23),
 (23, 20),
+(23, 23),
+(24, 23),
 (25, 5),
 (26, 5),
 (27, 5),
@@ -333,7 +359,6 @@ INSERT INTO `users_classes` (`id_user`, `id_class`) VALUES
 (122, 5),
 (123, 5),
 (123, 20),
-(123, 23),
 (124, 5),
 (124, 20),
 (125, 5),
@@ -430,13 +455,13 @@ ALTER TABLE `users_classes`
 -- AUTO_INCREMENT pentru tabele `classes`
 --
 ALTER TABLE `classes`
-  MODIFY `id_class` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=38;
+  MODIFY `id_class` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=39;
 
 --
 -- AUTO_INCREMENT pentru tabele `laboratory`
 --
 ALTER TABLE `laboratory`
-  MODIFY `id_laboratory` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id_laboratory` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT pentru tabele `roles`

@@ -64,14 +64,6 @@ $cid = $row['id_class'];
             <h2>Seminar</h2>
             <h4><?php echo $row['seminar_name'] ?></h4>
             <p><?php echo $row['seminar_date'] ?></p>
-            <!-- This section is what the users sees -->
-            <?php if (userIsStudent()) { ?>
-            <!-- This alert is for orientation purposes only. It will be removed in the future. -->
-            <div class="alert alert-secondary" role="alert">
-                <strong>View Attendances/Grades</strong>
-            </div>
-
-            <?php } ?>
 
             <!-- This section is what Teacher and Admins sees -->
             <?php if (userIsTeacher()) { ?>

@@ -1,90 +1,149 @@
 <?php
-require 'header.php';
+require_once 'header.php';
 
-$userId = $_GET['idUser'];
-$sql1 = "SELECT FROM users WHERE id_user = $userId";
-$result1=mysqli_query($conn,$sql1);
+// definirea valorilor pentru erori ca fiind goale. Altfel la prima afisare a formularului ar da o eroare
+$usernameErr = $passwordErr = $verifyPasswordErr = $emailErr = $firstNameErr = $lastNameErr = $id_roleErr = "";
+
+// definirea variabilelor pentru valorile din formular. Daca nu am stabili, la prima afisare a formularului ar da eroare
+$username1 = $password1 = $verifyPassword1 = $email1 = $firstName1 = $lastName1 = $id_role1 = "";
+
+//definirea valorii la eroarea principala. Daca intervine orice eroare la verificare formular, ii vom atribui o alta valoare
+$error = 0;
+$success = "";
+
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Get variables
+    $username1 = sanitizare($_POST['username']);
+    $verifyPassword1 = sanitizare($_POST['verifyPassword']);
+    $email1 = sanitizare($_POST['email']);
+    $firstName1 = sanitizare($_POST['firstName']);
+    $lastName1 = sanitizare($_POST['lastName']);
+    $id_role1 = sanitizare($_POST['id_role']);
+
+    $id_role1 = (int) $id_role1;
+
+    require_once 'config.php';
+
+    // Verify Username
+    if (empty($username1)) {       
+        $usernameErr = "* username is required";
+        $error++;
+    } else {
+        if (strlen($username1) < 3) {
+            $usernameErr = "* username must be at least 3 characters long";
+            $error++;
+        } 
+        
+        if (!preg_match("/^[a-zA-Z0-9_]*$/", $username1)) {
+            $usernameErr = "* only letters, numbers and underscore are accepted";
+            $error++;
+        }
 
 
-// if ($result->num_rows > 0) {
-//     while($row = $result->fetch_assoc()) {
-//       $id_role1 = $row['id_role'];
-//       $username1=$row['username'];
-//       $password1=$row['password'];
-//       $first_name1=$row['first_name'];
-//       $last_name1=$row['last_name'];
-//       $email1=$row['email'];
-//     }
-// } else {
-//     echo "0 results";
-// }
+        $query = "SELECT * FROM `users` WHERE username = '$username1'";
+        $result = mysqli_query($conn, $query);
+        $rows = mysqli_num_rows($result);
 
-
-if ($_SERVER["REQUEST_METHOD"]=="POST") {
-
-  if(isset($_POST['submit'])){
-    $id_role=$_POST['id_role'];
-    $username=$_POST['username'];
-    $password=$_POST['password'];
-    $first_name=$_POST['first_name'];
-    $last_name=$_POST['last_name'];
-    $email=$_POST['email'];
-
-    echo $username;
-
-    $sql="INSERT INTO  users (id_role, username, password, first_name, last_name, email)
-    VALUES ('".$id_role."','".$username."','".$password."','".$first_name."','".$last_name."','".$email."')";
-    $result=mysqli_query($conn,$sql);
-
-    if($result){
-      header("Location: http://localhost/Proiect11/catalog/users.php"); /* Redirect browser */
-      exit();
-    }else{
-      die(mysqli_error($conn));
+        if ($rows > 0) {
+            $usernameErr = "* username already exists";
+            $error++;
+        }
     }
-    exit();
 
-  }
+    // Verify Email
+    if (empty($email1)) {       
+        $emailErr = "* email is required";
+        $error++;
+    } else {
+        if (!preg_match('/^[a-zA-Z0-9\+_\-\.]+@+[a-zA-Z]+.+[a-zA-Z]$/i', $email1)) {
+            $emailErr = "* not a valid email address; the format should be like this: xxx@yyy.zzz";
+            $error++;
+        }
+
+        $query = "SELECT * FROM `users` WHERE email = '$email1'";
+        $result = mysqli_query($conn, $query);
+        $rows = mysqli_num_rows($result);
+
+        if ($rows > 0) {
+            $emailErr = "* email already exists";
+            $error++;
+        }
+    }
+
+    // Verify First Name
+    if (empty($firstName1)) {       
+        $firstNameErr = "* first name is required";
+        $error++;
+    } else {
+        if (!preg_match("/^[a-zA-Z]*$/", $firstName1)) {
+            $firstNameErr = "* only letters are accepted";
+            $error++;
+        }
+    }
+
+    // Verify Last Name
+    if (empty($lastName1)) {       
+        $lastNameErr = "* first name is required";
+        $error++;
+    } else {
+        if (!preg_match("/^[a-zA-Z]*$/", $lastName1)) {
+            $lastNameErr = "* only letters are accepted";
+            $error++;
+        }
+    }    
+}
+
+//edit a user
+if(isset($_POST['submit'])) {
+	$id_user = $_POST['id_user'];
+	$username = $_POST['username'];
+	$id_role = $_POST['id_role'];
+	$last_name = $_POST['last_name'];
+	$first_name = $_POST['first_name'];
+	$email = $_POST['email'];
+
+	$sql = "UPDATE users SET username = '$username', email = '$email', id_role = '$id_role', last_name = '$last_name', first_name = '$first_name' WHERE id_user = '$id_user'";
+	$result = mysqli_query($conn,$sql);
+	if ($result) {
+		header("Location:users.php");
+	} else {
+		echo "Error: " . $sql . "<br>" . mysqli_error($conn);
+	}
 }
  ?>
+	
 
- <!-- <div id="editUserModal" class="modal fade" method="POST" action="" target="_self" enctype="multipart/form-data">
- 	<div class="modal-dialog">
- 		<div class="modal-content">
- 				<div class="modal-header">
- 					<h4 class="modal-title">Edit User</h4>
- 					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
- 				</div>
-        <div class="modal-body">
+<div class="container-fluid">
+    <div class="row p-5 justify-content-center">
+        <div class="col-4">
+		<form action="editUser.php" method="POST" class="col-6 mx-auto" >
+					<h4>Edit User</h4>
 					<div class="form-group">
 						<label>Username</label>
-						<input type="text" name="username" class="form-control" value="<?php echo '$username1' ?>"  required>
+						<input type="text" class="form-control" name="username" value=""> 
+						<input type="text" class="form-control" name="id_user" value="<?php echo $_GET['idUser']?>">
 					</div>
-          <div class="form-group">
-            <label>Password</label>
-            <input type="password" name="password" class="form-control" value="<?php echo '$password1' ?>"  required>
-          </div>
 					<div class="form-group">
 						<label>Role</label>
-						<input type="text" name="id_role" class="form-control" value= "<?php echo '$id_role1' ?>" required>
+						<input type="text" class="form-control" name="id_role">
 					</div>
 					<div class="form-group">
 						<label>First name</label>
-						<input type="text" name="first_name" class="form-control" value="<?php echo '$first_name1' ?>" required>
+						<input type="text" class="form-control" name="first_name">
 					</div>
 					<div class="form-group">
 						<label>Last name</label>
-					<input type="text" name="last_name" class="form-control" value="<?php echo '$last_name1' ?>" required>
+							<input type="text" class="form-control" name="last_name">
 					</div>
 					<div class="form-group">
 						<label>Email</label>
-						<input type="text" name="email" class="form-control" value="<?php echo '$email1' ?>" required>
+						<input type="text" class="form-control" name="email">
 					</div>
-				</div>
- 				<div class="modal-footer">
- 					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
- 					<input type="submit" class="btn btn-info" name="submit" value="Save">
- 				</div>
- 		</div>
- 	</div>
- </div> -->
+					<div class="d-flex mx-auto justify-content-center pt-4">
+						<a href="users.php" target="users.php"><input type="button" class="btn btn-warning" value="Cancel"></a>
+						<input type="submit" class="btn btn-success" name= "submit" value="Save">
+					</div>
+            </form> <!-- End of form -->
+        </div> <!-- End of col-4 -->
+    </div> <!-- End of row -->
+</div> <!-- End of container-fluid -->

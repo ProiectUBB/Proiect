@@ -141,6 +141,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </td>
 
                 <td>
+                  <a href="cursEdit.php?cid=<?php echo $row['id_class'] ?>" class="edit"><i class="material-icons" title="Edit">&#xE254;</i></a>
                   <a href="cursDelete.php?cid=<?php echo $row['id_class'] ?>" class="delete"><i class="material-icons" title="Delete">&#xE872;</i></a>
                 </td>
               </tr>

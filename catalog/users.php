@@ -66,6 +66,7 @@ function myFunction() {
     }
   }
 }
+
 </script>
 
 <div class="container-xxl">
@@ -142,11 +143,8 @@ function myFunction() {
 							<td><?php echo $row['last_name'] ?></td>
 							<td><?php echo $row['email'] ?></td>
 							<td>
-								<a href="#editUserModal" class="edit" data-toggle="modal">
-									<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i>
-									<a href="editUser.php?idUser=<?php echo $row['id_user'] ?>" class="edit" ></a>
-								</a>
-
+								<a href="editUser.php?idUser=<?php echo $row['id_user'] ?>" class="edit">
+									<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
 								<a href="deleteUser.php?idUser=<?php echo $row['id_user'] ?>" class="delete" >
 									<i class="material-icons" title="Delete">&#xE872;</i>
 								</a>
@@ -231,46 +229,6 @@ function myFunction() {
 </div>
 <!-- End of addUserModal -->
 
-<!-- Edit Modal HTML -->
-<div id="editUserModal" class="modal fade" enctype="multipart/form-data">
-	<form action="editUser.php" method="POST" >
-	<div class="modal-dialog">
-		<div class="modal-content">
-				<div class="modal-header">
-					<h4 class="modal-title">Edit User</h4>
-					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				</div>
-				<div class="modal-body">
-					<div class="form-group">
-						<label>Username</label>
-						<input type="text" class="form-control" value="<?php echo $username1 ?>" required>
-					</div>
-					<div class="form-group">
-						<label>Role</label>
-						<input type="email" class="form-control" value="" required>
-					</div>
-					<div class="form-group">
-						<label>First name</label>
-						<input type="text" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Last name</label>
-							<input type="text" class="form-control" required>
-					</div>
-					<div class="form-group">
-						<label>Email</label>
-						<input type="text" class="form-control" required>
-					</div>
-				</div>
-				<div class="modal-footer">
-					<input type="button" class="btn btn-default" data-dismiss="modal" value="Cancel">
-					<input type="submit" class="btn btn-info" name= "submit" value="Save">
-				</div>
-			</form>
-		</div>
-	</div>
-</div>
-<!-- End of editUserModal -->
 
 <!-- Add spacing at bottom of page to make it look better. -->
 <div class="mt-5"></div>

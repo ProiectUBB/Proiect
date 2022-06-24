@@ -47,7 +47,7 @@ if ($error == 0) {
         $sql = "UPDATE classes SET class_name = '$class_name', 'description' = '$description' WHERE id_class = '$cid'";
             $result = mysqli_query($conn,$sql);
             if ($result) {
-                header("Location:cursuri.php");
+                header("Location:classes.php");
             } else {
                 echo "Error: " . $sql . "<br>" . mysqli_error($conn);
             }
@@ -59,7 +59,7 @@ if ($error == 0) {
 <div class="container-fluid">
     <div class="row p-5 justify-content-center">
         <div class="col-4">
-		<form action="cursEdit.php" method="POST" class="col-6 mx-auto" >
+		<form action="classEdit.php" method="POST" class="col-6 mx-auto" >
 					<h4>Edit Class</h4>
 					<div class="form-group">
 						<label>Class</label>
@@ -71,7 +71,7 @@ if ($error == 0) {
 						<input type="text" class="form-control" name="description">
 					</div>
 					<div class="d-flex mx-auto justify-content-center pt-4 gap-2">
-                        <a href="cursuri.php" target="cursuri.php"><input type="button" class="btn btn-warning" value="Cancel"></a>
+                        <a href="classes.php" target="classes.php"><input type="button" class="btn btn-warning" value="Cancel"></a>
 						<input type="submit" class="btn btn-success" name="submit" value="Save">
 					</div>   
             </form> <!-- End of form -->

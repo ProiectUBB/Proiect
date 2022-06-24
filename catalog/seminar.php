@@ -4,6 +4,8 @@ require_once 'functions.php';
 /* If the user is not logged in, it redirects to the index page. */
 if (!userIsLoggedIn()) { header("Location:index.php"); }
 
+if (!userIsTeacher()) { header("Location:index.php"); }
+
 require_once 'temp-header.php';
 require_once 'temp-sidenav.php';
 require_once 'temp-dashboard-header.php';
@@ -17,6 +19,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['update-seminar-attenda
 
     // Get variables
     $seminar_id = $_POST['seminar_id'];
+    
     foreach ($_POST['attendance'] as $key => $value) {
         $current_user = $_SESSION['user_id'];
         $stud_id = $key;
@@ -63,11 +66,7 @@ $cid = $row['id_class'];
         <div class="col">
             <h2>Seminar</h2>
             <h4><?php echo $row['seminar_name'] ?></h4>
-            <p><?php echo $row['seminar_date'] ?></p>
-
-            <!-- This section is what Teacher and Admins sees -->
-            <?php if (userIsTeacher()) { ?>
-
+            <p><?php echo date("Y-m-d",strtotime($row['seminar_date'])); ?></p>
             <form class="row g-3" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>">
                 <table class="table table-hover">
                     <thead class="table-dark">
@@ -147,8 +146,8 @@ $cid = $row['id_class'];
 
                 <input type="hidden" name="seminar_id" value="<?php echo $sid ?>">
                 <button type="submit" class="btn btn-lg btn-primary" name="update-seminar-attendance">Update Student Attendance</button>
+                <a type="button" class="btn btn-warning" href="myClass.php?cid=<?php echo $cid; ?>" role="button">Go Back</a>
             </form>
-        <?php } // userIsTeacher close ?>
         </div> <!-- end col -->
     </div> <!-- end row -->
 </div>  <!-- end container -->

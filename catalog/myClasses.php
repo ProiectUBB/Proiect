@@ -36,13 +36,64 @@ $num_rows = mysqli_num_rows($result);
                             <?php if (userIsTeacher()) { 
                                 /* This is a SQL query that is selecting the id_user from the users_classes and users tables. It is joining the two tables on the
                                 id_user. It is also filtering the results by the id_role and id_class. */
-                                $sql = "SELECT uc.id_user FROM users_classes uc JOIN users u ON uc.id_user = u.id_user WHERE u.id_role = 4 AND uc.id_class = " . $row['id_class'];
-                                $num_rows = $conn->query($sql)->num_rows; ?>
+                                $sql_students = "SELECT uc.id_user FROM users_classes uc JOIN users u ON uc.id_user = u.id_user WHERE u.id_role = 4 AND uc.id_class = " . $row['id_class'];
+                                $num_stud_rows = $conn->query($sql_students)->num_rows; 
+                                
+                                $sql_seminaries = "SELECT * FROM seminar WHERE id_class = " . $row['id_class'];
+                                $num_sem_rows = $conn->query($sql_seminaries)->num_rows; 
 
-                                <span class="badge bg-<?php if ($num_rows > 0) { echo 'primary'; } else { echo 'danger'; } ?> rounded-pill">
-                                    <?php echo $num_rows ?>
+                                $sql_laboratories = "SELECT * FROM laboratory WHERE id_class = " . $row['id_class'];
+                                $num_lab_rows = $conn->query($sql_laboratories)->num_rows; ?>
+
+                                <span class="badge bg-<?php if ($num_sem_rows > 0) { echo 'primary'; } else { echo 'danger'; } ?> rounded-pill">
+                                    Seminaries: <?php echo $num_sem_rows ?>
+                                </span>
+
+                                <span class="badge bg-<?php if ($num_lab_rows > 0) { echo 'primary'; } else { echo 'danger'; } ?> rounded-pill">
+                                    Laboratories: <?php echo $num_lab_rows ?>
+                                </span>
+
+                                <span class="badge bg-<?php if ($num_stud_rows > 0) { echo 'primary'; } else { echo 'danger'; } ?> rounded-pill">
+                                    Students: <?php echo $num_stud_rows ?>
                                 </span>
                             <?php } // Close userIsTeacher() ?>
+                        </li>
+                    <?php } // End while loop ?>
+                </ol>
+            <?php } else if (userIsAdmin()) { ?>
+                <ol class="list-group list-group-numbered">
+                    <?php $sql = "SELECT * FROM classes"; 
+                        $result = $conn->query($sql); 
+                        while ($row = $result->fetch_assoc()) { ?>
+                        
+                        <li class="list-group-item d-flex justify-content-between align-items-start">
+                            <div class="ms-2 me-auto">
+                                <div class="fw-bold"><a href="myClass.php?cid=<?php echo $row['id_class']; ?>" class="link-dark"><?php echo $row['class_name']; ?></a></div>
+                                <span class="d-inline-block text-truncate" style="max-width: 640px;" data-bs-toggle="tooltip" data-bs-placement="bottom" title="<?php echo $row['description']; ?>">
+                                    <?php echo $row['description']; ?>
+                                </span>
+                            </div>
+                            <?php
+                                $sql_students = "SELECT uc.id_user FROM users_classes uc JOIN users u ON uc.id_user = u.id_user WHERE u.id_role = 4 AND uc.id_class = " . $row['id_class'];
+                                $num_stud_rows = $conn->query($sql_students)->num_rows; 
+                                
+                                $sql_seminaries = "SELECT * FROM seminar WHERE id_class = " . $row['id_class'];
+                                $num_sem_rows = $conn->query($sql_seminaries)->num_rows; 
+
+                                $sql_laboratories = "SELECT * FROM laboratory WHERE id_class = " . $row['id_class'];
+                                $num_lab_rows = $conn->query($sql_laboratories)->num_rows; ?>
+
+                                <span class="badge bg-<?php if ($num_sem_rows > 0) { echo 'primary'; } else { echo 'danger'; } ?> rounded-pill">
+                                    Seminaries: <?php echo $num_sem_rows ?>
+                                </span>
+
+                                <span class="badge bg-<?php if ($num_lab_rows > 0) { echo 'primary'; } else { echo 'danger'; } ?> rounded-pill">
+                                    Laboratories: <?php echo $num_lab_rows ?>
+                                </span>
+                                
+                                <span class="badge bg-<?php if ($num_stud_rows > 0) { echo 'primary'; } else { echo 'danger'; } ?> rounded-pill">
+                                    Students: <?php echo $num_stud_rows ?>
+                                </span>
                         </li>
                     <?php } // End while loop ?>
                 </ol>

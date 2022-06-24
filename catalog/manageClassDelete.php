@@ -3,6 +3,8 @@ require_once 'functions.php';
 
 /* If the user is not logged in, it redirects to the index page. */
 if (!userIsLoggedIn()) { header("Location:/catalog/index.php"); }
+/* Checking if the user is a admin. If not, it redirects to the index page. */
+if (!userIsAdmin()) { header("Location:index.php"); }
 
 require_once 'config.php';
 

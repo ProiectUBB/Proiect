@@ -20,8 +20,6 @@
     <!-- Custom styles for this template -->
     <!-- <link rel="stylesheet" href="css/homepage.css" type="text/css"> -->
     <link href="css/style.css" rel="stylesheet" type="text/css">
-    <!-- <link href="css/users.css" rel="stylesheet" type="text/css"> -->
-    <link href="css/users2.css" rel="stylesheet" type="text/css">
 
     <!-- Custom scripts for this template -->
     <!-- <script src="js/custom-js.js"></script>    -->

@@ -27,6 +27,24 @@ require_once 'temp-dashboard-header.php';
     echo 'Last Name: ' . $row[3] . '<br>';  
     echo 'Role: ' . $row[5] . '<br>';  
     echo 'Regitration date: ' . $row[4] . '<br>';  
+
+    if (userIsStudent()) {
+      $sql = "SELECT c.class_name FROM users_classes uc JOIN classes c ON uc.id_class = c.id_class WHERE uc.id_user = ". $_SESSION['id_user'];
+      $result = $conn->query($sql);
+      $num_rows = mysqli_num_rows($result);
+
+      if ($num_rows > 0) {
+        echo '<br />You are registered to the following classes:<br />';
+        echo '<ol>';
+        while($row = $result->fetch_assoc()) {
+          echo '<li>'. $row['class_name'] .'</li>';
+        }
+        echo '<ol>';
+      } else {
+        echo 'No classes registered.';
+      }
+      
+    }
 ?>
     </div> <!-- end col -->
   </div>  <!-- end row -->

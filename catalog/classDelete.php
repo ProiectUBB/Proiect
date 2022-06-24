@@ -3,6 +3,8 @@ require_once 'functions.php';
 
 /* It checks if the user is logged in. If not, it redirects to the login page. */
 if (!userIsLoggedIn()) { header("Location:/catalog/index.php"); }
+/* Checking if the user is a admin. If not, it redirects to the index page. */
+if (!userIsAdmin()) { header("Location:index.php"); }
 
 require_once 'config.php';
 
@@ -22,15 +24,15 @@ if (isset($classId) && !empty($classId)) {
         echo "Error: " . $sql . "<br>" . mysqli_error($conn);
     }
 
-    /* It redirects the user to the `cursuri.php` page. */
-    header("Location:cursuri.php");
+    /* It redirects the user to the `classes.php` page. */
+    header("Location:classes.php");
 } else {
-    /* It redirects the user to the `cursuri.php` page. */
-    header("Location:cursuri.php");
+    /* It redirects the user to the `classes.php` page. */
+    header("Location:classes.php");
 }
 
-/* It redirects the user to the `cursuri.php` page. */
-header("Location:cursuri.php");
+/* It redirects the user to the `classes.php` page. */
+header("Location:classes.php");
 
 exit();
 ?>

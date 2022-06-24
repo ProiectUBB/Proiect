@@ -2,6 +2,8 @@
 require_once 'functions.php';
 
 if (!userIsLoggedIn()) { header("Location:/catalog/index.php"); }
+/* Checking if the user is a admin. If not, it redirects to the index page. */
+if (!userIsAdmin()) { header("Location:index.php"); }
 
 require_once 'config.php';
 
@@ -24,7 +26,7 @@ if(isset($_POST['submit'])) {
     }
 } else {
     /* Checking if the user is not the sysadmin, if it is not, it will delete the user. */
-    $userId = $_GET['idUser'];
+    $userId = $_GET['uid'];
     
     if ($userId != 1) {
         if (isset($userId) && !empty($userId)) {

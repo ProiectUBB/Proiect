@@ -52,6 +52,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['submit'])) {
             <?php if ($success) { ?>
                 <div class="alert alert-success" role="alert">
                     <?php echo $success; ?>
+                    <br />
+                    <br />
+                    <a type="button" class="btn btn-primary btn-sm" href="class.php?cid=<?php echo $class_id; ?>" role="button">Go Back</a>
                 </div>
             <?php } ?>
 

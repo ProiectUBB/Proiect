@@ -3,7 +3,7 @@ require_once 'functions.php';
 
 
 if (!userIsLoggedIn()) { header("Location:index.php"); }
-
+/* Checking if the user is a admin. If not, it redirects to the index page. */
 if (!userIsAdmin()) { header("Location:index.php"); }
 
 require_once 'temp-header.php';
@@ -72,7 +72,7 @@ function myFunction() {
 <div class="container-xxl">
 	<div class="table-responsive">
 		<div class="table-wrapper">
-			<form action="deleteUser.php" method="post">
+			<form action="userDelete.php" method="post">
 				<div class="table-title">
 					<div class="row">
 						<div class="col-sm-6">
@@ -143,9 +143,9 @@ function myFunction() {
 							<td><?php echo $row['last_name'] ?></td>
 							<td><?php echo $row['email'] ?></td>
 							<td>
-								<a href="editUser.php?idUser=<?php echo $row['id_user'] ?>" class="edit">
+								<a href="userEdit.php?uid=<?php echo $row['id_user'] ?>" class="edit">
 									<i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-								<a href="deleteUser.php?idUser=<?php echo $row['id_user'] ?>" class="delete" >
+								<a href="userDelete.php?uid=<?php echo $row['id_user'] ?>" class="delete" >
 									<i class="material-icons" title="Delete">&#xE872;</i>
 								</a>
 							</tr>
@@ -176,7 +176,7 @@ function myFunction() {
 
 <!-- Add Modal HTML -->
 <div id="addUserModal" class="modal fade" enctype="multipart/form-data">
-	<form action="addUser.php" method="POST" >
+	<form action="userAdd.php" method="POST" >
 		<div class="modal-dialog">
 			<div class="modal-content">
 				<div class="modal-header">

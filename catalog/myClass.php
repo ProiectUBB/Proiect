@@ -15,16 +15,21 @@ $cid = sanitizare($_GET['cid']);
 
 /* Selecting all the classes from the database where the id_class is equal to the cid. */
 $sql = "SELECT * FROM classes WHERE id_class = $cid";
+$result = mysqli_query($conn, $sql);
+$row = mysqli_fetch_row($result);
+
 ?>
 
 <div class="container">
     <div class="row">
         <div class="col">
             <h2>Class</h2>
-            
+            <h1><?php echo $row[1]; ?></h1>
+            <p><?php echo $row[2]; ?></p>            
+
             <nav>
                 <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
-                    <button class="nav-link" id="nav-seminar-tab" data-bs-toggle="tab" data-bs-target="#nav-seminar" type="button" role="tab" aria-controls="nav-seminar" aria-selected="true">SEMINARS</button>
+                    <button class="nav-link active" id="nav-seminar-tab" data-bs-toggle="tab" data-bs-target="#nav-seminar" type="button" role="tab" aria-controls="nav-seminar" aria-selected="true">SEMINARS</button>
 
                     <button class="nav-link" id="nav-laboratory-tab" data-bs-toggle="tab" data-bs-target="#nav-laboratory" type="button" role="tab" aria-controls="nav-laboratory" aria-selected="false">LABORATORIES</button>    
                 </div>
@@ -33,7 +38,7 @@ $sql = "SELECT * FROM classes WHERE id_class = $cid";
             <?php if (userIsTeacher()) { ?>
                 <div class="tab-content" id="nav-tabContent">
                     <!-- List Seminars -->
-                    <div class="tab-pane fade bg-light" id="nav-seminar" role="tabpanel" aria-labelledby="nav-seminar-tab">
+                    <div class="tab-pane fade bg-light show active" id="nav-seminar" role="tabpanel" aria-labelledby="nav-seminar-tab">
                         <?php $sql = "SELECT s.id_seminar, s.seminar_name, s.seminar_date FROM seminar s WHERE id_class = $cid ORDER BY s.seminar_date ASC";
                         $result = mysqli_query($conn, $sql);
 
@@ -50,7 +55,7 @@ $sql = "SELECT * FROM classes WHERE id_class = $cid";
                                     <?php while ($row = mysqli_fetch_row($result)) { ?>
                                         <tr>
                                             <td><a href="seminar.php?sid=<?php echo $row[0] ?>" class="link-dark"><?php echo $row[1]; ?></a></td>
-                                            <td><?php echo $row[2]; ?></td>
+                                            <td><?php echo date("Y-m-d",strtotime($row[2])); ?></td>
                                         </tr>
                                     <?php } // End while loop ?>
                                 </tbody>
@@ -58,6 +63,9 @@ $sql = "SELECT * FROM classes WHERE id_class = $cid";
                         <?php } else { ?>
                             <div class="alert alert-info" role="alert">
                                 <h4 class="alert-heading">No seminars found!</h4>
+                                <?php if (userIsAdmin()) { ?>
+                                    <a class="btn btn-primary w-100 " href="class.php?cid=<?php echo $_GET['cid']; ?>" role="button">Add Seminary</a>
+                                <?php } ?>
                             </div>
                         <?php } // End num rows if ?>
                     </div> <!-- end List Seminars for this course -->
@@ -80,7 +88,7 @@ $sql = "SELECT * FROM classes WHERE id_class = $cid";
                                     <?php while ($row = mysqli_fetch_row($result)) { ?>
                                         <tr>
                                             <td><a href="laboratory.php?lid=<?php echo $row[0] ?>" class="link-dark"><?php echo $row[1]; ?></a></td>
-                                            <td><?php echo $row[2]; ?></td>
+                                            <td><?php echo date("Y-m-d",strtotime($row[2])); ?></td>
                                         </tr>
                                     <?php } // end while loop ?>
                                 </tbody>
@@ -88,18 +96,21 @@ $sql = "SELECT * FROM classes WHERE id_class = $cid";
                         <?php } else { ?>
                             <div class="alert alert-info" role="alert">
                                 <h4 class="alert-heading">No laboratories found!</h4>
+                                <?php if (userIsAdmin()) { ?>
+                                    <a class="btn btn-primary w-100 " href="class.php?cid=<?php echo $_GET['cid']; ?>" role="button">Add Laboratory</a>
+                                <?php } ?>  
                             </div>
                         <?php } // end num rows if ?>
                     </div> <!-- end List Laboratories for this course -->
                 </div> <!-- end tab-content -->
             <?php } // end if userIsTeacher ?>
 
-            <?php if (userIsStudent()) { 
+            <?php if (userIsStudent() && !userIsAdmin()) { 
                 $uid = $_SESSION['id_user']; ?>
 
                 <div class="tab-content" id="nav-tabContent">
                     <!-- List Seminars -->
-                    <div class="tab-pane fade bg-light" id="nav-seminar" role="tabpanel" aria-labelledby="nav-seminar-tab">
+                    <div class="tab-pane fade bg-light show active" id="nav-seminar" role="tabpanel" aria-labelledby="nav-seminar-tab">
                         <?php $sql = "SELECT s.seminar_name, s.seminar_date, sa.is_present, sa.mentions FROM seminar_attendance sa JOIN seminar s ON sa.id_seminar = s.id_seminar WHERE id_user = $uid ORDER BY s.seminar_date ASC;";
                             $result = mysqli_query($conn, $sql); 
 
@@ -124,7 +135,7 @@ $sql = "SELECT * FROM classes WHERE id_class = $cid";
                                                 echo '<tr class="table-danger">';
                                             } ?>
                                                 <td><strong><?php echo $row[0]; ?></strong></td>
-                                                <td><?php echo $row[1]; ?></td>
+                                                <td><?php echo date("Y-m-d",strtotime($row[1])); ?></td>
                                                 <td><?php if ($row[2] == 0) { echo 'Absent'; } elseif ($row[2] == 1) { echo 'Present'; } else { echo 'Exempted'; } ?></td>
                                                 <td><?php echo $row[3]; ?></td>
                                             </tr>
@@ -166,7 +177,7 @@ $sql = "SELECT * FROM classes WHERE id_class = $cid";
                                                 echo '<tr class="table-danger">';
                                             } ?>
                                                 <td><strong><?php echo $row[0]; ?></strong></td>
-                                                <td><?php echo $row[1]; ?></td>
+                                                <td><?php echo date("Y-m-d",strtotime($row[1])); ?></td>
                                                 <td><?php if ($row[2] == 0) { echo 'Absent'; } elseif ($row[2] == 1) { echo 'Present'; } else { echo 'Exempted'; } ?></td>
                                                 <td><?php echo $row[3]; ?></td>
                                                 <td><?php echo $row[4]; ?></td>

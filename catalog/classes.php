@@ -111,9 +111,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
           <tr>
             <th></th>
             <th><a href="?order=<?php echo $asc_or_desc; ?>">Class Name<i class="fas fa-sort<?php echo 1 == 1 ? '-' . $up_or_down : ''; ?>"></i></a></th>
-            <th>Nr Profi</th>
-            <th>Nr Studenti</th>
-            <th>Optiuni</th>
+            <th>Teachers</th>
+            <th>Students</th>
+            <th>Seminaries</th>
+            <th>Laboratories</th>
+            <th>Options</th>
           </tr>
         </thead>
 
@@ -125,7 +127,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <td></td>
 
                 <td>
-                  <a type="text/html" href="curs.php?cid=<?php echo $row["id_class"]; ?>" class="link-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="<?php echo $row["description"]; ?>">
+                  <a type="text/html" href="class.php?cid=<?php echo $row["id_class"]; ?>" class="link-primary" data-bs-toggle="tooltip" data-bs-placement="top" title="<?php echo $row["description"]; ?>">
                     <?php echo $row["class_name"]; ?>
                   </a>
                 </td>
@@ -141,8 +143,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 </td>
 
                 <td>
-                  <a href="cursEdit.php?cid=<?php echo $row['id_class'] ?>" class="edit"><i class="material-icons" title="Edit">&#xE254;</i></a>
-                  <a href="cursDelete.php?cid=<?php echo $row['id_class'] ?>" class="delete"><i class="material-icons" title="Delete">&#xE872;</i></a>
+                  <?php $sql = "SELECT s.id_seminar FROM seminar s WHERE s.id_class = " . $row['id_class']; 
+                  echo $conn->query($sql)->num_rows; ?>
+                </td>
+
+                <td>
+                  <?php $sql = "SELECT l.id_laboratory FROM laboratory l WHERE l.id_class = " . $row['id_class']; 
+                  echo $conn->query($sql)->num_rows; ?>
+                </td> 
+
+                <td>
+                  <a href="classEdit.php?cid=<?php echo $row['id_class'] ?>" class="edit"><i class="material-icons" title="Edit">&#xE254;</i></a>
+                  <a href="classDelete.php?cid=<?php echo $row['id_class'] ?>" class="delete"><i class="material-icons" title="Delete">&#xE872;</i></a>
                 </td>
               </tr>
           <?php

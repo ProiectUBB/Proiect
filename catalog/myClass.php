@@ -13,6 +13,19 @@ require_once 'config.php';
 /* Sanitizing the `['cid']` variable. */
 $cid = sanitizare($_GET['cid']);
 
+/* Checking if the user is an admin or not. If the user is not an admin, it will check if
+the user has access to the class. If the user does not have access to the class, it will
+redirect the user to the previous page. */
+if (!userIsAdmin()) {
+    $query_acc = "SELECT * FROM users_classes WHERE id_user = ".$_SESSION['id_user']." AND id_class = $cid";
+    $result_acc = mysqli_query($conn, $query_acc);
+    $num_rows_acc = mysqli_num_rows($result_acc);
+
+    if ($num_rows_acc == 0) {
+        header("location:javascript://history.go(-1)");
+    }
+}
+
 /* Selecting all the classes from the database where the id_class is equal to the cid. */
 $sql = "SELECT * FROM classes WHERE id_class = $cid";
 $result = mysqli_query($conn, $sql);
@@ -25,7 +38,7 @@ $row = mysqli_fetch_row($result);
         <div class="col">
             <h2>Class</h2>
             <h1><?php echo $row[1]; ?></h1>
-            <p><?php echo $row[2]; ?></p>            
+            <p><?php echo $row[2]; ?></p>
 
             <nav>
                 <div class="nav nav-tabs nav-fill" id="nav-tab" role="tablist">
@@ -111,7 +124,7 @@ $row = mysqli_fetch_row($result);
                 <div class="tab-content" id="nav-tabContent">
                     <!-- List Seminars -->
                     <div class="tab-pane fade bg-light show active" id="nav-seminar" role="tabpanel" aria-labelledby="nav-seminar-tab">
-                        <?php $sql = "SELECT s.seminar_name, s.seminar_date, sa.is_present, sa.mentions FROM seminar_attendance sa JOIN seminar s ON sa.id_seminar = s.id_seminar WHERE id_user = $uid ORDER BY s.seminar_date ASC;";
+                        <?php $sql = "SELECT s.seminar_name, s.seminar_date, sa.is_present, sa.mentions FROM seminar_attendance sa JOIN seminar s ON sa.id_seminar = s.id_seminar WHERE id_user = $uid AND id_class = $cid ORDER BY s.seminar_date ASC;";
                             $result = mysqli_query($conn, $sql); 
 
                             if (mysqli_num_rows($result) > 0) { ?>
@@ -152,7 +165,7 @@ $row = mysqli_fetch_row($result);
 
                     <!-- List Laboratories -->
                     <div class="tab-pane fade bg-light" id="nav-laboratory" role="tabpanel" aria-labelledby="nav-laboratory-tab">
-                    <?php $sql = "SELECT l.laboratory_name, l.laboratory_date, la.is_present, la.grade, la.mentions FROM laboratory_attendance la JOIN laboratory l ON la.id_laboratory = l.id_laboratory WHERE id_user = 4 ORDER BY l.laboratory_date  ASC;";
+                    <?php $sql = "SELECT l.laboratory_name, l.laboratory_date, la.is_present, la.grade, la.mentions FROM laboratory_attendance la JOIN laboratory l ON la.id_laboratory = l.id_laboratory WHERE id_user = 4 AND id_class = $cid ORDER BY l.laboratory_date  ASC;";
                             $result = mysqli_query($conn, $sql); 
 
                             if (mysqli_num_rows($result) > 0) { ?>

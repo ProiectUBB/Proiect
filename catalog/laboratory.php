@@ -56,6 +56,19 @@ $result = mysqli_query($conn, $sql);
 $row = mysqli_fetch_assoc($result);
 /* Getting the class id based on the laboratory id. */
 $cid = $row['id_class'];
+
+/* This is checking if the user is an admin or not. If the user is not an admin, it will check if the
+user has access to the laboratory. If the user does not have access to the laboratory, it will
+redirect the user to the previous page. */
+if (!userIsAdmin()) {
+    $query_acc = "SELECT * FROM laboratory l JOIN users_classes uc ON uc.id_class = l.id_class WHERE uc.id_user = ". $_SESSION['id_user'] ." AND l.id_laboratory = $lid LIMIT 1;";
+    $result_acc = mysqli_query($conn, $query_acc);
+    $num_rows_acc = mysqli_num_rows($result_acc);
+
+    if ($num_rows_acc == 0) {
+        header("location:javascript://history.go(-1)");
+    }
+}
 ?>
 
 <div class="container">

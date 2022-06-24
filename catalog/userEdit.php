@@ -10,12 +10,69 @@ require_once 'temp-sidenav.php';
 require_once 'temp-dashboard-header.php';
 
 require_once 'config.php';
+$usernameErr = $passwordErr = $verifyPasswordErr = $emailErr = $firstNameErr = $lastNameErr = $id_roleErr = "";
+// definirea variabilelor pentru valorile din formular. Daca nu am stabili, la prima afisare a formularului ar da eroare
+$username1 = $password1 = $verifyPassword1 = $email1 = $firstName1 = $lastName1 = $id_role1 = "";
+//definirea valorii la eroarea principala. Daca intervine orice eroare la verificare formular, ii vom atribui o alta valoare
+$error = 0;
+$success = "";
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username1 = sanitizare($_POST['username']);
+    $password1 = md5(sanitizare($_POST['password']));
+    $verifyPassword1 = md5(sanitizare($_POST['verifyPassword']));
+    $id_role1 = sanitizare($_POST['id_role']);
+    $email1 = sanitizare($_POST['email']);
+    $firstName1 = sanitizare($_POST['firstName']);
+    $lastName1 = sanitizare($_POST['lastName']);
+// Verify Username
+if (strlen($username1) < 3) {
+    $usernameErr = "* username must be at least 3 characters long";
+    $error++;
+} 
 
+if (!preg_match("/^[a-zA-Z0-9_]*$/", $username1)) {
+    $usernameErr = "* only letters, numbers and underscore are accepted";
+    $error++;
+}
+
+$query_ext = "SELECT * FROM `users` WHERE username = '$username1'";
+$result_ext = mysqli_query($conn, $query_ext);
+$rows_ext = mysqli_num_rows($result_ext);
+
+if ($rows_ext > 0) {
+    $usernameErr = "* username already exists";
+    $error++;
+}
+
+// Verify Password
+if (strlen($password1) < 2) {
+    $passwordErr = "* password must be at least 3 characters long";
+    $error++;
+} else {
+    if (empty($verifyPassword1)) {
+        $verifyPasswordErr = "* verify password is required";
+        $error++;
+    } else {
+        if ($password1 != $verifyPassword1){
+            $verifyPasswordErr = "* passwords does not match";
+            $error++;
+        }
+    }
+}
+
+// Verify Email
+if (!preg_match('/^[a-zA-Z0-9\+_\-\.]+@+[a-zA-Z]+.+[a-zA-Z]$/i', $email1)) {
+    $emailErr = "* not a valid email address; the format should be like this: xxx@yyy.zzz";
+    $error++;
+    }
+}
+if($error == 0)
+{
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $uid = sanitizare($_POST['uid']);
     $username = sanitizare($_POST['username']);
-    $password = sanitizare($_POST['password']);
-    $verifyPassword = sanitizare($_POST['verifyPassword']);
+    $password = md5(sanitizare($_POST['password']));
+    $verifyPassword = md5(sanitizare($_POST['verifyPassword']));
     $id_role = sanitizare($_POST['id_role']);
     $email = sanitizare($_POST['email']);
     $firstName = sanitizare($_POST['firstName']);
@@ -31,12 +88,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     header("Location:" . $back);
 }
+    $uid = sanitizare($_GET['uid']);
+    $sql = "SELECT * FROM users WHERE id_user = $uid";
+    $result = mysqli_query($conn, $sql);
+    $row = mysqli_fetch_assoc($result);
 
-$uid = sanitizare($_GET['uid']);
+}
+else 
+{
+    //TODO: should show errors
+    $uid = sanitizare($_POST['uid']);
+    $back = "userEdit.php?uid=" . $uid;
+    header("Location:" . $back);
+}
 
-$sql = "SELECT * FROM users WHERE id_user = $uid";
-$result = mysqli_query($conn, $sql);
-$row = mysqli_fetch_assoc($result);
 ?>
 	
 <div class="container">
@@ -57,14 +122,14 @@ $row = mysqli_fetch_assoc($result);
                 <label for="password">Password:</label>
                 <div class="input-group input-container">
                     <span class="input-group-text" id="basic-addon1"><i class="fa fa-key"></i></span>
-                    <input type="password" name="password" class="form-control input-field" placeholder="Password" id="inputPassword" value="<?php echo $row['password']; ?>" required>
+                    <input type="password" name="password" class="form-control input-field" placeholder="Password" id="inputPassword" value="<?php echo md5($row['password']); ?>" required>
 					<span class="error"><?php echo $passwordErr; ?></span>
                 </div>
 
                 <label for="verifyPassword">Verify Password:</label>
 				<div class="input-group input-container">
 					<span class="input-group-text" id="basic-addon1"><i class="fa fa-key"></i></span>
-					<input type="password" name="verifyPassword" class="form-control input-field" id="inputVerifyPassword" placeholder="Verify Password" value="<?php echo $row['password']; ?>" required>
+					<input type="password" name="verifyPassword" class="form-control input-field" id="inputVerifyPassword" placeholder="Verify Password" value="<?php echo md5($row['password']); ?>" required>
 					<span class="error"><?php echo $verifyPasswordErr; ?></span>
 				</div>
 

@@ -15,7 +15,7 @@ $eroare=0;
 if ($_SERVER["REQUEST_METHOD"]=="POST") {
 	/* Sanitizing the user input. */
     $user=sanitizare($_POST["user"]);
-	$psw=sanitizare($_POST["password"]);
+	$psw=md5(sanitizare($_POST["password"]));
 
     require_once 'config.php';
 
@@ -58,7 +58,7 @@ if ($_SERVER["REQUEST_METHOD"]=="POST") {
 
             header("Location:index.php");
 
-			echo "Exista o sesiune activa pentru utilizatorul".$_SESSION['Username'];
+			echo "There already is an active session for the current user".$_SESSION['Username'];
 
 			while($row = $result->fetch_assoc()) {
                 $_SESSION["id_user"] = $row["id_user"]; 

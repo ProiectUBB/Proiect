@@ -23,8 +23,8 @@ $success = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // Get variables
     $username1 = sanitizare($_POST['username']);
-    $password1 = sanitizare($_POST['password']);
-    $verifyPassword1 = sanitizare($_POST['verifyPassword']);
+    $password1 = md5(sanitizare($_POST['password']));
+    $verifyPassword1 = md5(sanitizare($_POST['verifyPassword']));
     $email1 = sanitizare($_POST['email']);
     $firstName1 = sanitizare($_POST['firstName']);
     $lastName1 = sanitizare($_POST['lastName']);

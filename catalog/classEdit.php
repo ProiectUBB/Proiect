@@ -1,5 +1,5 @@
 <?php
-require_once 'header.php';
+require_once 'temp-header.php';
 
 $classNameErr = $classDescrErr = "";
 $className1 = $classDescr1 = "";
@@ -7,6 +7,8 @@ $error = 0;
 $success = "";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+
+    require_once 'functions.php';
     // Get variables
     $className1 = sanitizare($_POST['class_name']);
     $classDescr1 = sanitizare($_POST['description']);
@@ -44,7 +46,7 @@ if ($error == 0) {
         $description = $_POST['decription'];
         $cid = $_POST['cid'];
 
-        $sql = "UPDATE classes SET class_name = '$class_name', 'description' = '$description' WHERE id_class = '$cid'";
+        $sql = "UPDATE classes SET class_name = '$class_name', description = '$description' WHERE id_class = '$cid'";
             $result = mysqli_query($conn,$sql);
             if ($result) {
                 header("Location:classes.php");
@@ -64,7 +66,7 @@ if ($error == 0) {
 					<div class="form-group">
 						<label>Class</label>
 						<input type="text" class="form-control" name="class_name" value=""> 
-                        <input type="text" class="form-control" name="cid" value="<?php echo $_GET['cid']?>">
+                        <input type="hidden" class="form-control" name="cid" value="<?php echo $_GET['cid']?>">
 					</div>
 					<div class="form-group">
 						<label>Class Description</label>

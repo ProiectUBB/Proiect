@@ -201,8 +201,8 @@ function myFunction() {
 						<label>Role</label>
 						<select class="form-select" aria-label="Default select example" name="id_role">
 							<?php if (userIsSysAdmin()) { ?><option value="2">Admin</option><?php } ?>
-							<option value="4">Profesor</option>
-							<option value="3" selected>Student</option>
+							<option value="3">Profesor</option>
+							<option value="4" selected>Student</option>
 						</select>
 					</div>
 					<div class="form-group">

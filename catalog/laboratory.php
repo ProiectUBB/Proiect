@@ -148,7 +148,7 @@ if (!userIsAdmin()) {
                             </td>
                             <td>
                                 <div class="form-group">
-                                    <input type="number" class="form-control" name="grades[]" value="<?php if ($row_attendance['grade']) { echo $row_attendance['grade']; } ?>" min="1" max="10" required />
+                                    <input type="number" class="form-control" name="grades[]" value="<?php if ($row_attendance['grade']) { echo $row_attendance['grade']; } ?>" min="0" max="10" required />
                                 </div>
                             </td>
                             <td>
